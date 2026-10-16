@@ -4,33 +4,19 @@
 
 # LoxTube
 
-### Built on SmartTube. Made for your phone.
+### Advanced YouTube Player for Android Phones & Tablets
 
-**SmartTube for phones**, unofficial: a YouTube client for Android phones and tablets, built on
-[SmartTube](https://github.com/yuliskov/SmartTube) by [@yuliskov](https://github.com/yuliskov).<br>
-Sign in with a code, keep it playing in the background, save videos for offline,
-and cast to SmartTube on your TV.
+A fast, lightweight, and customizable YouTube client for Android phones and tablets.<br>
+Ad-free streaming, SponsorBlock, background playback, floating mini player, custom category tabs, and offline saving.
 
 [![Latest release](https://img.shields.io/github/v/release/comonx/LoxTube?style=flat-square&label=release&color=1E2A78)](https://github.com/comonx/LoxTube/releases/latest)
 [![Android 7.0+](https://img.shields.io/badge/Android-7.0%2B-1E2A78?style=flat-square)](#download)
 [![License: MIT](https://img.shields.io/badge/license-MIT-1E2A78?style=flat-square)](LICENSE)
-[![Built on SmartTube](https://img.shields.io/badge/built_on-SmartTube-1E2A78?style=flat-square)](https://github.com/yuliskov/SmartTube)
-[![Discord](https://img.shields.io/badge/Discord-join-1E2A78?style=flat-square&logo=discord&logoColor=white)](https://discord.gg/xu3v6euSHq)
-
-**[Website](https://newtube.org/) · [Download](#download) · [Features](#features) · [How sign-in works](#how-sign-in-works) · [FAQ](#faq) · [Translate](#translate) · [Credits](#built-on-smarttube)**
-
-<br>
-
-<img src=".github/assets/hero.webp" width="100%" alt="Three NewTube screens: the sign-in code, the watch page playing Sintel, and the Downloads tab">
 
 </div>
 
 > [!NOTE]
-> **NewTube is SmartTube's work underneath.** The engine that talks to YouTube, the account
-> sign-in and the SponsorBlock, DeArrow and Return YouTube Dislike integrations all come from
-> [SmartTube](https://github.com/yuliskov/SmartTube). NewTube adds a touch interface, its own
-> player and offline saving. It is an independent project, not endorsed by SmartTube's developer.
-> NewTube takes no donations: if you find it useful, [support SmartTube](https://github.com/yuliskov/SmartTube#donation).
+> **LoxTube** is an independent Android YouTube client built for phones, bringing a modern touch interface, customizable category tabs, double-tap seek, picture-in-picture floating mini-player, and background playback.
 
 ## Features
 
