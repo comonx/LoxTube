@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- System-wide floating overlay mini-player matching user screenshot Image 2 (Locked) & Image 3 (Unlocked). -->
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/floating_mini_card"
+    android:layout_width="270dp"
+    android:layout_height="152dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@android:color/black"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="12dp"
+    app:strokeWidth="0dp"
+    app:strokeColor="@android:color/transparent">
+
+    <FrameLayout
+        android:id="@+id/floating_mini_touch_area"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Live video rendering surface -->
+        <androidx.media3.ui.AspectRatioFrameLayout
+            android:id="@+id/floating_mini_player_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/floating_mini_freeze"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:importantForAccessibility="no"
+                android:scaleType="fitXY"
+                android:visibility="gone" />
+
+        </androidx.media3.ui.AspectRatioFrameLayout>
+
+        <!-- Top gradient scrim for watermark & top icons readability -->
+        <View
+            android:id="@+id/floating_mini_top_scrim"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_gravity="top"
+            android:background="@drawable/bg_float_scrim_top" />
+
+        <!-- Bottom gradient scrim for time & bottom icons readability -->
+        <View
+            android:id="@+id/floating_mini_bottom_scrim"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bg_float_scrim_bottom" />
+
+        <!-- TOP BAR: Left = Watermark (Brand Logo + Text); Right = Lock + Headphone + Expand + Close -->
+        <RelativeLayout
+            android:id="@+id/floating_mini_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="7dp"
+            android:paddingEnd="5dp"
+            android:paddingTop="5dp">
+
+            <!-- Watermark: Always visible in both locked & unlocked states unless disabled in Settings -->
+            <LinearLayout
+                android:id="@+id/floating_mini_brand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/floating_mini_logo"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_loxtube_logo" />
+
+                <TextView
+                    android:id="@+id/floating_mini_brand_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:shadowColor="#CC000000"
+                    android:shadowDx="0"
+                    android:shadowDy="1"
+                    android:shadowRadius="2"
+                    android:text="Tube"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="12.5sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- Top Right Action Icons -->
+            <LinearLayout
+                android:id="@+id/floating_mini_top_actions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <!-- Lock Button: In unlocked state shows open lock; in locked state shows closed lock -->
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/floating_mini_lock"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Lock Controls"
+                    android:padding="2dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_float_lock" />
+
+                <!-- Headphone Button: Hides floating mini-player (keeps background audio) -->
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/floating_mini_headphone"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="3dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Hide Mini Player"
+                    android:padding="2dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_float_headphone" />
+
+                <!-- PiP Button: Return to App Portrait Video Player -->
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/floating_mini_pip_expand"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="3dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/mobile_mini_expand"
+                    android:padding="2dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_float_expand" />
+
+                <!-- Close Button: Closes floating mini player and stops session -->
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/floating_mini_close"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="3dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/mobile_mini_close"
+                    android:padding="2dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_float_close" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!-- CENTER CONTROLS: Rewind 10s, Play/Pause, Forward 10s (Clean thin glyphs without bulky background) -->
+        <LinearLayout
+            android:id="@+id/floating_mini_center_controls"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/floating_mini_rewind"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/mobile_player_previous"
+                android:padding="3dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_float_rewind" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/floating_mini_play_pause"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/mobile_mini_play_pause"
+                android:padding="4dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_float_pause" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/floating_mini_forward"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/mobile_player_next"
+                android:padding="3dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_float_forward" />
+
+        </LinearLayout>
+
+        <!-- BOTTOM BAR: Left = Time (0:33 / 15:31); Right = Volume / Mute + Fullscreen (Landscape) -->
+        <RelativeLayout
+            android:id="@+id/floating_mini_bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="4dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <TextView
+                android:id="@+id/floating_mini_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="sans-serif-medium"
+                android:shadowColor="#DD000000"
+                android:shadowDx="0"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:textColor="#E6FFFFFF"
+                android:textSize="10.5sp"
+                tools:text="0:33 / 15:31" />
+
+            <LinearLayout
+                android:id="@+id/floating_mini_bottom_actions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <!-- Volume / Mute Button -->
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/floating_mini_volume"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Volume"
+                    android:padding="2dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_float_volume" />
+
+                <!-- Fullscreen Button: Rotates phone to landscape and opens full player -->
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/floating_mini_fullscreen"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/mobile_player_fullscreen"
+                    android:padding="2dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_float_fullscreen" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!-- Bottom Red Progress Bar: Exactly edge-to-edge flush on bottom border, zero bottom margin/gap -->
+        <SeekBar
+            android:id="@+id/floating_mini_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="0dp"
+            android:max="1000"
+            android:maxHeight="2.5dp"
+            android:minHeight="2.5dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
+            android:paddingBottom="0dp"
+            android:paddingTop="0dp"
+            android:progressDrawable="@drawable/progress_float_loxtube"
+            android:splitTrack="false"
+            android:thumb="@drawable/bg_float_thumb_invisible"
+            android:thumbOffset="0dp"
+            tools:progress="350" />
+
+        <!-- Double-tap seek feedback indicators (Left: -10s, Right: +10s) -->
+        <LinearLayout
+            android:id="@+id/floating_mini_seek_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:layout_marginStart="14dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="@drawable/bg_float_seek_indicator"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:visibility="gone">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_float_rewind"
+                app:tint="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/floating_mini_seek_left_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="-10s"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/floating_mini_seek_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="14dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="@drawable/bg_float_seek_indicator"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:visibility="gone">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_float_forward"
+                app:tint="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/floating_mini_seek_right_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="+10s"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Side-dock arrow button (< or >) shown when player is pushed off-screen into side edge -->
+        <ImageButton
+            android:id="@+id/floating_mini_dock_tab"
+            android:layout_width="32dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical|end"
+            android:background="@drawable/bg_float_dock_tab"
+            android:contentDescription="Expand Mini Player"
+            android:padding="4dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_float_dock_arrow_left"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+</com.google.android.material.card.MaterialCardView>

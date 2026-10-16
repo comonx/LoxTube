@@ -1,0 +1,785 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="20dp"
+    app:cardBackgroundColor="#1A1A1A"
+    app:cardCornerRadius="22dp"
+    app:cardElevation="12dp"
+    app:strokeColor="#333333"
+    app:strokeWidth="1dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- Top Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <ImageView
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:src="@mipmap/app_icon"
+                    android:contentDescription="@null"
+                    android:layout_marginEnd="12dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LoxTube স্বাগতম"
+                        android:textColor="@android:color/white"
+                        android:textSize="19sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/text_setup_subtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ধাপ ১: প্রয়োজনীয় অনুমতি"
+                        android:textColor="#AAAAAA"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Step Progress Indicator -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginBottom="18dp">
+
+                <!-- Step 1 -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/indicator_step_1"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:background="@drawable/bg_setup_step_active"
+                        android:gravity="center"
+                        android:text="১"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="অনুমতি"
+                        android:textColor="#CCCCCC"
+                        android:textSize="11sp"
+                        android:layout_marginTop="2dp" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/line_step_1_2"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_weight="1"
+                    android:background="#333333"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Step 2 -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/indicator_step_2"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:background="@drawable/bg_setup_step_inactive"
+                        android:gravity="center"
+                        android:text="২"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="পছন্দ"
+                        android:textColor="#CCCCCC"
+                        android:textSize="11sp"
+                        android:layout_marginTop="2dp" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/line_step_2_3"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_weight="1"
+                    android:background="#333333"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Step 3 -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/indicator_step_3"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:background="@drawable/bg_setup_step_inactive"
+                        android:gravity="center"
+                        android:text="৩"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="সম্পন্ন"
+                        android:textColor="#CCCCCC"
+                        android:textSize="11sp"
+                        android:layout_marginTop="2dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- ============================================== -->
+            <!-- STEP 1 CONTAINER: MANDATORY PERMISSIONS       -->
+            <!-- ============================================== -->
+            <LinearLayout
+                android:id="@+id/container_setup_step_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="অ্যাপটি সঠিকভাবে চলার জন্য নিচের অনুমতিগুলো সক্রিয় করা আবশ্যক:"
+                    android:textColor="#DDDDDD"
+                    android:textSize="13sp"
+                    android:lineSpacingExtra="2dp"
+                    android:layout_marginBottom="14dp" />
+
+                <!-- Row 1: Notifications -->
+                <LinearLayout
+                    android:id="@+id/row_setup_notification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#262626"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:layout_marginBottom="8dp">
+
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/ic_setup_notification"
+                        app:tint="@android:color/white"
+                        android:layout_marginEnd="12dp"
+                        android:contentDescription="@null" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="নোটিফিকেশন অনুমতি"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ব্যাকগ্রাউন্ড প্লেয়ার ও কন্ট্রোলারের জন্য"
+                            android:textColor="#9E9E9E"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/status_setup_notification"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_setup_check"
+                        android:visibility="gone"
+                        android:contentDescription="@null" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_setup_notification"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="অনুমতি দিন"
+                        android:textColor="#3EA6FF"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <!-- Row 2: Background Playback -->
+                <LinearLayout
+                    android:id="@+id/row_setup_battery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#262626"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:layout_marginBottom="8dp">
+
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/ic_setup_battery"
+                        app:tint="@android:color/white"
+                        android:layout_marginEnd="12dp"
+                        android:contentDescription="@null" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ব্যাকগ্রাউন্ড প্লেব্যাক"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="স্ক্রিন বন্ধ থাকলেও নিরবচ্ছিন্ন গান চলার জন্য"
+                            android:textColor="#9E9E9E"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/status_setup_battery"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_setup_check"
+                        android:visibility="gone"
+                        android:contentDescription="@null" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_setup_battery"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="অনুমতি দিন"
+                        android:textColor="#3EA6FF"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <!-- Row 3: Storage & Fast Cache -->
+                <LinearLayout
+                    android:id="@+id/row_setup_storage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#262626"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:layout_marginBottom="8dp">
+
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/ic_setup_storage"
+                        app:tint="@android:color/white"
+                        android:layout_marginEnd="12dp"
+                        android:contentDescription="@null" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="লোকাল স্টোরেজ ও ক্যাশ"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="হোমস্ক্রিন দ্রুত লোড ও ক্যাশ স্থায়ী রাখতে"
+                            android:textColor="#9E9E9E"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/status_setup_storage"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_setup_check"
+                        android:visibility="gone"
+                        android:contentDescription="@null" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_setup_storage"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="অনুমতি দিন"
+                        android:textColor="#3EA6FF"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <!-- Row 4: Floating Mini-Player Overlay -->
+                <LinearLayout
+                    android:id="@+id/row_setup_overlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#262626"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:layout_marginBottom="18dp">
+
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/ic_player_pip"
+                        app:tint="@android:color/white"
+                        android:layout_marginEnd="12dp"
+                        android:contentDescription="@null" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ফ্লোটিং মিনি প্লেয়ার (PiP)"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="অ্যাপের বাইরে স্ক্রিনের ওপর ভাসমান মিনি প্লেয়ার"
+                            android:textColor="#9E9E9E"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/status_setup_overlay"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_setup_check"
+                        android:visibility="gone"
+                        android:contentDescription="@null" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_setup_overlay"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="অনুমতি দিন"
+                        android:textColor="#3EA6FF"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <!-- Next Button for Step 1 -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_setup_step_1_next"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="সব অনুমতি দিন ও পরবর্তী ধাপ"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    app:backgroundTint="#CC0000"
+                    app:cornerRadius="25dp" />
+            </LinearLayout>
+
+            <!-- ============================================== -->
+            <!-- STEP 2 CONTAINER: CONTENT PREFERENCES         -->
+            <!-- ============================================== -->
+            <LinearLayout
+                android:id="@+id/container_setup_step_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="আপনার পছন্দের ভিডিও ক্যাটাগরিগুলো বেছে নিন:"
+                        android:textColor="#DDDDDD"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/btn_setup_toggle_all_chips"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="সব সিলেক্ট করুন"
+                        android:textColor="#3EA6FF"
+                        android:textSize="12sp"
+                        android:padding="6dp" />
+                </LinearLayout>
+
+                <!-- Category grid (6 rows of 2 columns) -->
+                <!-- Row 1 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/chip_cat_news"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_setup_chip_unselected"
+                        android:gravity="center"
+                        android:text="📰 সংবাদ ও খবর"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp"
+                        android:layout_marginEnd="4dp" />
+
+                    <TextView
+                        android:id="@+id/chip_cat_movies"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_setup_chip_unselected"
+                        android:gravity="center"
+                        android:text="🎬 মুভি ও সিনেমা"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp"
+                        android:layout_marginStart="4dp" />
+                </LinearLayout>
+
+                <!-- Row 2 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/chip_cat_drama"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_setup_chip_unselected"
+                        android:gravity="center"
+                        android:text="🎭 নাটক ও টেলিফিল্ম"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp"
+                        android:layout_marginEnd="4dp" />
+
+                    <TextView
+                        android:id="@+id/chip_cat_funny"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_setup_chip_unselected"
+                        android:gravity="center"
+                        android:text="😂 ফানি ও কমেডি"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp"
+                        android:layout_marginStart="4dp" />
+                </LinearLayout>
+
+                <!-- Row 3 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/chip_cat_music"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_setup_chip_unselected"
+                        android:gravity="center"
+                        android:text="🎵 গান ও মিউজিক"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp"
+                        android:layout_marginEnd="4dp" />
+
+                    <TextView
+                        android:id="@+id/chip_cat_gaming"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_setup_chip_unselected"
+                        android:gravity="center"
+                        android:text="🎮 গেমিং"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp"
+                        android:layout_marginStart="4dp" />
+                </LinearLayout>
+
+                <!-- Row 4 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/chip_cat_tech"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_setup_chip_unselected"
+                        android:gravity="center"
+                        android:text="📱 বিজ্ঞান ও প্রযুক্তি"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp"
+                        android:layout_marginEnd="4dp" />
+
+                    <TextView
+                        android:id="@+id/chip_cat_sports"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_setup_chip_unselected"
+                        android:gravity="center"
+                        android:text="⚽ খেলাধুলা"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp"
+                        android:layout_marginStart="4dp" />
+                </LinearLayout>
+
+                <!-- Row 5 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/chip_cat_education"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_setup_chip_unselected"
+                        android:gravity="center"
+                        android:text="📚 শিক্ষা ও জ্ঞান"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp"
+                        android:layout_marginEnd="4dp" />
+
+                    <TextView
+                        android:id="@+id/chip_cat_islamic"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_setup_chip_unselected"
+                        android:gravity="center"
+                        android:text="🌙 ইসলামিক ও ওয়াজ"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp"
+                        android:layout_marginStart="4dp" />
+                </LinearLayout>
+
+                <!-- Row 6 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:id="@+id/chip_cat_cooking"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_setup_chip_unselected"
+                        android:gravity="center"
+                        android:text="🍳 রান্নাবান্না"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp"
+                        android:layout_marginEnd="4dp" />
+
+                    <TextView
+                        android:id="@+id/chip_cat_animation"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_setup_chip_unselected"
+                        android:gravity="center"
+                        android:text="🎨 কার্টুন ও অ্যানিমেশন"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp"
+                        android:layout_marginStart="4dp" />
+                </LinearLayout>
+
+                <!-- Step 2 Navigation Buttons -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_setup_step_2_back"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:text="পূর্ববর্তী"
+                        android:textSize="14sp"
+                        android:textColor="#CCCCCC"
+                        app:strokeColor="#555555"
+                        app:cornerRadius="24dp"
+                        android:layout_marginEnd="6dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_setup_step_2_next"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:text="পরবর্তী ধাপ"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white"
+                        app:backgroundTint="#CC0000"
+                        app:cornerRadius="24dp"
+                        android:layout_marginStart="6dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- ============================================== -->
+            <!-- STEP 3 CONTAINER: CONGRATULATIONS & FINISH    -->
+            <!-- ============================================== -->
+            <LinearLayout
+                android:id="@+id/container_setup_step_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/ic_setup_step_done"
+                    android:contentDescription="@null"
+                    android:layout_marginBottom="14dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="অভিনন্দন!"
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="আপনার LoxTube প্রাথমিক সেটআপ সফলভাবে সম্পন্ন হয়েছে। এখন আপনি বিজ্ঞাপনহীন প্রিমিয়াম ভিডিও দেখার জন্য প্রস্তুত।"
+                    android:textColor="#CCCCCC"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="3dp"
+                    android:layout_marginBottom="18dp" />
+
+                <!-- Summary Box -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#262626"
+                    android:orientation="vertical"
+                    android:padding="14dp"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/summary_permissions_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="✓ প্রয়োজনীয় সকল অনুমতি সক্রিয় করা হয়েছে"
+                        android:textColor="#81C784"
+                        android:textSize="13sp"
+                        android:layout_marginBottom="6dp" />
+
+                    <TextView
+                        android:id="@+id/summary_categories_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="✓ আপনার পছন্দের ক্যাটাগরি সংরক্ষিত হয়েছে"
+                        android:textColor="#81C784"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <!-- Finish / Start Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_setup_finish"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="LoxTube শুরু করুন"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    app:backgroundTint="#CC0000"
+                    app:cornerRadius="26dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</com.google.android.material.card.MaterialCardView>

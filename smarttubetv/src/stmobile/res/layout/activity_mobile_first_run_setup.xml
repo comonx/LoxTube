@@ -1,0 +1,1001 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F8FAFC">
+
+    <!-- TOP VIBRANT GRADIENT HEADER -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_setup_header_gradient"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="36dp"
+        android:paddingBottom="28dp">
+
+        <!-- Logo & App Title -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@mipmap/app_icon"
+                android:contentDescription="@null" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="LoxTube"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-black" />
+
+            <TextView
+                android:id="@+id/text_setup_step_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/bg_setup_chip_colorful_unselected"
+                android:backgroundTint="#33FFFFFF"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:text="ধাপ ১ / ৫"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_setup_header_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="স্বাগতম! শুরু করার আগে কিছু অনুমতি দিন"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_setup_header_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="সেরা ভিডিও ও অডিও অভিজ্ঞতা নিশ্চিত করতে নিচের সেটিংস সম্পন্ন করুন"
+            android:textColor="#E0E7FF"
+            android:textSize="12.5sp"
+            android:lineSpacingExtra="2dp" />
+
+        <!-- 5-Step Visual Progress Indicator -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Step 1 Dot -->
+            <TextView
+                android:id="@+id/indicator_dot_1"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:background="@drawable/bg_setup_icon_circle_purple"
+                android:backgroundTint="#FFFFFF"
+                android:gravity="center"
+                android:text="১"
+                android:textColor="#4F46E5"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/indicator_line_1_2"
+                android:layout_width="0dp"
+                android:layout_height="3dp"
+                android:layout_weight="1"
+                android:background="#40FFFFFF" />
+
+            <!-- Step 2 Dot -->
+            <TextView
+                android:id="@+id/indicator_dot_2"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:background="@drawable/bg_setup_icon_circle_purple"
+                android:backgroundTint="#40FFFFFF"
+                android:gravity="center"
+                android:text="২"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/indicator_line_2_3"
+                android:layout_width="0dp"
+                android:layout_height="3dp"
+                android:layout_weight="1"
+                android:background="#40FFFFFF" />
+
+            <!-- Step 3 Dot -->
+            <TextView
+                android:id="@+id/indicator_dot_3"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:background="@drawable/bg_setup_icon_circle_purple"
+                android:backgroundTint="#40FFFFFF"
+                android:gravity="center"
+                android:text="৩"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/indicator_line_3_4"
+                android:layout_width="0dp"
+                android:layout_height="3dp"
+                android:layout_weight="1"
+                android:background="#40FFFFFF" />
+
+            <!-- Step 4 Dot -->
+            <TextView
+                android:id="@+id/indicator_dot_4"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:background="@drawable/bg_setup_icon_circle_purple"
+                android:backgroundTint="#40FFFFFF"
+                android:gravity="center"
+                android:text="৪"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/indicator_line_4_5"
+                android:layout_width="0dp"
+                android:layout_height="3dp"
+                android:layout_weight="1"
+                android:background="#40FFFFFF" />
+
+            <!-- Step 5 Dot -->
+            <TextView
+                android:id="@+id/indicator_dot_5"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:background="@drawable/bg_setup_icon_circle_purple"
+                android:backgroundTint="#40FFFFFF"
+                android:gravity="center"
+                android:text="৫"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- MAIN SCROLLABLE CONTENT BODY -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:overScrollMode="never"
+        android:fillViewport="true">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="18dp">
+
+            <!-- ============================================== -->
+            <!-- STEP 1: FLOATING MINI PLAYER (OVERLAY)          -->
+            <!-- ============================================== -->
+            <LinearLayout
+                android:id="@+id/setup_step_1_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_setup_colorful_card"
+                android:elevation="6dp"
+                android:orientation="vertical"
+                android:padding="22dp"
+                android:visibility="visible">
+
+                <!-- Step Icon & Badge -->
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/bg_setup_icon_circle_purple"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_setup_overlay"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="ভাসমান প্লেয়ার (PiP ও মিনি প্লেয়ার)"
+                    android:textColor="#0F172A"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:lineSpacingExtra="3dp"
+                    android:text="অন্যান্য অ্যাপ ব্যবহার করার সময় ভিডিওটি ছোট উইন্ডো বা মিনি প্লেয়ারে চালু রাখতে 'ডিসপ্লে ওভার অ্যাপস' অনুমতি প্রয়োজন।"
+                    android:textColor="#475569"
+                    android:textSize="13.5sp" />
+
+                <!-- Bullet Points -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="✓ অ্যাপ থেকে বের হলেও ভিডিও ব্যাকগ্রাউন্ডে ভাসবে"
+                        android:textColor="#334155"
+                        android:textSize="13sp"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="✓ স্ক্রিনের যেকোনো পাশে টেনে রাখা বা ডক করা যাবে"
+                        android:textColor="#334155"
+                        android:textSize="13sp"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="✓ সাইডে ডাবল ক্লিক করে ১০ সেকেন্ড ফরোয়ার্ড ও রিওয়াইন্ড"
+                        android:textColor="#334155"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <!-- SWITCH ROW CARD -->
+                <LinearLayout
+                    android:id="@+id/card_setup_switch_overlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_setup_switch_card"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ভাসমান প্লেয়ার সক্রিয় করুন"
+                            android:textColor="#0F172A"
+                            android:textSize="14.5sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/text_status_overlay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="সক্রিয় করতে সুইচ চাপুন"
+                            android:textColor="#64748B"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_setup_overlay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:thumbTint="@color/color_setup_switch_thumb"
+                        app:trackTint="@color/color_setup_switch_track" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- ============================================== -->
+            <!-- STEP 2: NOTIFICATIONS                          -->
+            <!-- ============================================== -->
+            <LinearLayout
+                android:id="@+id/setup_step_2_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_setup_colorful_card"
+                android:elevation="6dp"
+                android:orientation="vertical"
+                android:padding="22dp"
+                android:visibility="gone">
+
+                <!-- Step Icon & Badge -->
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/bg_setup_icon_circle_blue"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_setup_notification"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="নোটিফিকেশন ও মিডিয়া বার কন্ট্রোল"
+                    android:textColor="#0F172A"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:lineSpacingExtra="3dp"
+                    android:text="ভিডিও প্লে চলাকালীন নোটিফিকেশন বার থেকে প্লে, পজ, নেক্সট এবং স্টপ বাটন ব্যবহার করার জন্য নোটিফিকেশন অনুমতি প্রয়োজন।"
+                    android:textColor="#475569"
+                    android:textSize="13.5sp" />
+
+                <!-- Bullet Points -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="✓ নোটিফিকেশন কার্ডে প্লে, পজ ও স্টপ বাটন সক্রিয় হবে"
+                        android:textColor="#334155"
+                        android:textSize="13sp"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="✓ লক স্ক্রিন থেকে সরাসরি অডিও নিয়ন্ত্রণ করা যাবে"
+                        android:textColor="#334155"
+                        android:textSize="13sp"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="✓ চ্যানেল ও প্লেলিস্টের জরুরি আপডেট পাওয়া যাবে"
+                        android:textColor="#334155"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <!-- SWITCH ROW CARD -->
+                <LinearLayout
+                    android:id="@+id/card_setup_switch_notification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_setup_switch_card"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="নোটিফিকেশন সক্রিয় করুন"
+                            android:textColor="#0F172A"
+                            android:textSize="14.5sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/text_status_notification"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="সক্রিয় করতে সুইচ চাপুন"
+                            android:textColor="#64748B"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_setup_notification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:thumbTint="@color/color_setup_switch_thumb"
+                        app:trackTint="@color/color_setup_switch_track" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- ============================================== -->
+            <!-- STEP 3: BATTERY OPTIMIZATION                   -->
+            <!-- ============================================== -->
+            <LinearLayout
+                android:id="@+id/setup_step_3_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_setup_colorful_card"
+                android:elevation="6dp"
+                android:orientation="vertical"
+                android:padding="22dp"
+                android:visibility="gone">
+
+                <!-- Step Icon & Badge -->
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/bg_setup_icon_circle_orange"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_setup_battery"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="নিরবচ্ছিন্ন ব্যাকগ্রাউন্ড প্লেব্যাক"
+                    android:textColor="#0F172A"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:lineSpacingExtra="3dp"
+                    android:text="স্ক্রিন বন্ধ থাকলে বা অন্য কোনো ভারী অ্যাপ ব্যবহার করলেও যাতে মিউজিক বা ভিডিও ব্যাকগ্রাউন্ডে বন্ধ না হয়ে যায়।"
+                    android:textColor="#475569"
+                    android:textSize="13.5sp" />
+
+                <!-- Bullet Points -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="✓ স্ক্রিন বন্ধ রেখে নিশ্চিন্তে গান শুনুন"
+                        android:textColor="#334155"
+                        android:textSize="13sp"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="✓ সিস্টেম র্যাম ক্লিনার প্লেয়ার বন্ধ করবে না"
+                        android:textColor="#334155"
+                        android:textSize="13sp"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="✓ দীর্ঘ সময় ব্যাকগ্রাউন্ড অডিও সচল থাকবে"
+                        android:textColor="#334155"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <!-- SWITCH ROW CARD -->
+                <LinearLayout
+                    android:id="@+id/card_setup_switch_battery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_setup_switch_card"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ব্যাটারি অপ্টিমাইজেশন ছাড় দিন"
+                            android:textColor="#0F172A"
+                            android:textSize="14.5sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/text_status_battery"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="সক্রিয় করতে সুইচ চাপুন"
+                            android:textColor="#64748B"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_setup_battery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:thumbTint="@color/color_setup_switch_thumb"
+                        app:trackTint="@color/color_setup_switch_track" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- ============================================== -->
+            <!-- STEP 4: STORAGE & MEDIA                        -->
+            <!-- ============================================== -->
+            <LinearLayout
+                android:id="@+id/setup_step_4_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_setup_colorful_card"
+                android:elevation="6dp"
+                android:orientation="vertical"
+                android:padding="22dp"
+                android:visibility="gone">
+
+                <!-- Step Icon & Badge -->
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/bg_setup_icon_circle_emerald"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_setup_storage"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="মিডিয়া ও ডাউনলোড অনুমতি"
+                    android:textColor="#0F172A"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:lineSpacingExtra="3dp"
+                    android:text="ভিডিও অফলাইনে ডাউনলোড করে সেভ রাখতে এবং ভিডিও মেমোরি ক্যাশে দ্রুত বাফারিংয়ের জন্য মিডিয়া অ্যাক্সেস প্রয়োজন।"
+                    android:textColor="#475569"
+                    android:textSize="13.5sp" />
+
+                <!-- Bullet Points -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="✓ সরাসরি মোবাইলে ভিডিও ও অডিও ডাউনলোড"
+                        android:textColor="#334155"
+                        android:textSize="13sp"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="✓ সুপার ফাস্ট ক্যাশিং ও বাফারিংলেস প্লেব্যাক"
+                        android:textColor="#334155"
+                        android:textSize="13sp"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="✓ অফলাইনে সেভ করা ভিডিও ইন্টারনেট ছাড়া দেখা"
+                        android:textColor="#334155"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <!-- SWITCH ROW CARD -->
+                <LinearLayout
+                    android:id="@+id/card_setup_switch_storage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_setup_switch_card"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="মিডিয়া স্টোরেজ সক্রিয় করুন"
+                            android:textColor="#0F172A"
+                            android:textSize="14.5sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/text_status_storage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="সক্রিয় করতে সুইচ চাপুন"
+                            android:textColor="#64748B"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_setup_storage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:thumbTint="@color/color_setup_switch_thumb"
+                        app:trackTint="@color/color_setup_switch_track" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- ============================================== -->
+            <!-- STEP 5: PREFERRED CATEGORIES                   -->
+            <!-- ============================================== -->
+            <LinearLayout
+                android:id="@+id/setup_step_5_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_setup_colorful_card"
+                android:elevation="6dp"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:visibility="gone">
+
+                <!-- Step Icon & Badge -->
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/bg_setup_icon_circle_rose"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_setup_sparkles"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="আপনার পছন্দের ক্যাটাগরি বেছে নিন"
+                    android:textColor="#0F172A"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="হোম ফিডে আপনার পছন্দের ভিডিও আগে দেখানোর জন্য নির্বাচন করুন:"
+                    android:textColor="#475569"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/btn_setup_toggle_all_chips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="6dp"
+                    android:text="সব সিলেক্ট করুন"
+                    android:textColor="#4F46E5"
+                    android:textSize="12.5sp"
+                    android:textStyle="bold" />
+
+                <!-- Category Chips Grid -->
+                <!-- Row 1 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/chip_setup_news"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/bg_setup_chip_colorful_selected"
+                        android:gravity="center"
+                        android:text="📰 সংবাদ"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/chip_setup_movies"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/bg_setup_chip_colorful_selected"
+                        android:gravity="center"
+                        android:text="🎬 সিনেমা"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/chip_setup_music"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_setup_chip_colorful_selected"
+                        android:gravity="center"
+                        android:text="🎵 গান"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12.5sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Row 2 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/chip_setup_drama"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/bg_setup_chip_colorful_selected"
+                        android:gravity="center"
+                        android:text="🎭 নাটক"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/chip_setup_funny"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/bg_setup_chip_colorful_selected"
+                        android:gravity="center"
+                        android:text="😂 ফানি"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/chip_setup_gaming"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_setup_chip_colorful_unselected"
+                        android:gravity="center"
+                        android:text="🎮 গেমিং"
+                        android:textColor="#334155"
+                        android:textSize="12.5sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Row 3 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/chip_setup_tech"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/bg_setup_chip_colorful_unselected"
+                        android:gravity="center"
+                        android:text="📱 প্রযুক্তি"
+                        android:textColor="#334155"
+                        android:textSize="12.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/chip_setup_sports"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/bg_setup_chip_colorful_unselected"
+                        android:gravity="center"
+                        android:text="⚽ খেলা"
+                        android:textColor="#334155"
+                        android:textSize="12.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/chip_setup_islamic"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_setup_chip_colorful_unselected"
+                        android:gravity="center"
+                        android:text="🕌 ইসলামিক"
+                        android:textColor="#334155"
+                        android:textSize="12.5sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Row 4 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/chip_setup_education"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/bg_setup_chip_colorful_unselected"
+                        android:gravity="center"
+                        android:text="📚 শিক্ষা"
+                        android:textColor="#334155"
+                        android:textSize="12.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/chip_setup_cooking"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/bg_setup_chip_colorful_unselected"
+                        android:gravity="center"
+                        android:text="🍳 রান্না"
+                        android:textColor="#334155"
+                        android:textSize="12.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/chip_setup_animation"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_setup_chip_colorful_unselected"
+                        android:gravity="center"
+                        android:text="✨ অ্যানিমেশন"
+                        android:textColor="#334155"
+                        android:textSize="12.5sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/text_setup_cat_summary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_setup_switch_card"
+                    android:padding="12dp"
+                    android:text="✓ ৫টি পছন্দের ক্যাটাগরি নির্বাচিত হয়েছে"
+                    android:textColor="#16A34A"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </ScrollView>
+
+    <!-- BOTTOM STICKY ACTION CONTROLS -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:elevation="14dp"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="18dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Back Button -->
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btn_setup_prev"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/bg_setup_switch_card"
+                android:contentDescription="Previous"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_setup_arrow_back"
+                android:visibility="gone" />
+
+            <!-- Next / Finish Button -->
+            <TextView
+                android:id="@+id/btn_setup_next"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_setup_btn_gradient"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="পরবর্তী ধাপ  ➔"
+                android:textColor="#FFFFFF"
+                android:textSize="15.5sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- Skip Link -->
+        <TextView
+            android:id="@+id/btn_setup_skip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="4dp"
+            android:text="এই ধাপটি পরে করতে চান? এড়িয়ে যান"
+            android:textColor="#94A3B8"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

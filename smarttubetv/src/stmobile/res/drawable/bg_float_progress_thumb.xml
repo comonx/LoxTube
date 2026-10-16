@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Red circle thumb for floating mini-player progress bar -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="#FFFF0033" />
+    <size
+        android:width="9dp"
+        android:height="9dp" />
+</shape>

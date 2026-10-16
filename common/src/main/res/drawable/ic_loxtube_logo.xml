@@ -1,0 +1,30 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="28dp"
+    android:height="28dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- LoxTube White Stylized 'L' Bracket -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M20,20 C20,17.8 21.8,16 24,16 C26.2,16 28,17.8 28,20 L28,68 C28,71.3 30.7,74 34,74 L68,74 C70.2,74 72,75.8 72,78 C72,80.2 70.2,82 68,82 L34,82 C26.3,82 20,75.7 20,68 Z" />
+
+    <!-- LoxTube Neon Gradient Play Triangle -->
+    <path
+        android:pathData="M43,29.5 C40.8,28.2 38,29.8 38,32.4 L38,65.6 C38,68.2 40.8,69.8 43,68.5 L71.8,51.9 C73.9,50.7 73.9,47.3 71.8,46.1 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="linear"
+                android:startX="38"
+                android:startY="30"
+                android:endX="74"
+                android:endY="68">
+                <item android:offset="0.0" android:color="#FFFF0055" />
+                <item android:offset="0.5" android:color="#FFFF1744" />
+                <item android:offset="1.0" android:color="#FFFF5252" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+</vector>

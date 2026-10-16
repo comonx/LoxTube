@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="update_urls">
+        <!-- LoxTube: updates come from comonx/LoxTube repository. -->
+        <!-- The latest published release's manifest. -->
+        <item>https://github.com/comonx/LoxTube/releases/latest/download/newtube.json</item>
+        <item>https://github.com/comonx/LoxTube/releases/download/latest/newtube.json</item>
+    </string-array>
+</resources>

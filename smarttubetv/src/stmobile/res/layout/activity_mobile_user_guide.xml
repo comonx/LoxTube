@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8FAFC"
+    android:orientation="vertical">
+
+    <!-- TOP TOOLBAR -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#FFFFFF"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="16dp">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_guide_back"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Back"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_setup_arrow_back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="ব্যবহার নির্দেশিকা ও ফিচার গাইড"
+            android:textColor="#0F172A"
+            android:textSize="17.5sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+            <!-- BANNER -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_setup_header_gradient"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LoxTube মাস্টার গাইড 📖"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:lineSpacingExtra="3dp"
+                        android:text="অ্যাপের সব প্রিমিয়াম ফিচার, হিডেন জেসচার ও শর্টকাট সহজে জানার জন্য নিচে প্রতিটি বিষয়ের পূর্ণাঙ্গ নির্দেশিকা দেওয়া হলো:"
+                        android:textColor="#E0E7FF"
+                        android:textSize="13.5sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- CARD 1: FLOATING MINI PLAYER -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeColor="#E0E7FF"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_setup_icon_circle_purple"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_setup_overlay"
+                            android:contentDescription="@null" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:text="১. ভাসমান মিনি প্লেয়ার (Floating PiP)"
+                            android:textColor="#0F172A"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:lineSpacingExtra="3dp"
+                        android:text="• নিচে টেনে নামালে মিনি প্লেয়ার: ভিডিও চলাকালীন প্লেয়ারটি নিচের দিকে সোয়াইপ করলেই সাথে সাথে মিনি প্লেয়ার চালু হবে।\n\n• সাইডে ডাবল ক্লিক (ডাবল ট্যাপ): মিনি প্লেয়ারের ডানপাশে ডাবল ট্যাপ করলে ১০ সেকেন্ড ফরোয়ার্ড (+10s), এবং বামপাশে ডাবল ট্যাপ করলে ১০ সেকেন্ড রিওয়াইন্ড (-10s) হবে।\n\n• সাইড ডকিং (অ্যারো ট্যাব): মিনি প্লেয়ার স্ক্রিনের বাইরে একপাশে ঠেলে দিলে তা একটি তীর চিহ্নে পরিণত হয়ে সাইডে লুকিয়ে থাকবে। তীর চিহ্নে চাপ দিলে আবার বড় হয়ে যাবে।\n\n• হেডফোন বাটন: শুধু অডিও শুনতে হেডফোন আইকনে চাপ দিলে মিনি প্লেয়ার স্ক্রিন থেকে হাইড হয়ে ব্যাকগ্রাউন্ডে গান চলবে।\n\n• লক বাটন: ভুল স্পর্শ এড়াতে লক বাটনে চাপ দিয়ে কন্ট্রোল লক করে রাখতে পারেন।"
+                        android:textColor="#334155"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- CARD 2: NOTIFICATION & STOP BUTTON -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeColor="#E0E7FF"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_setup_icon_circle_blue"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_setup_notification"
+                            android:contentDescription="@null" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:text="২. নোটিফিকেশন বার ও স্টপ বাটন"
+                            android:textColor="#0F172A"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:lineSpacingExtra="3dp"
+                        android:text="• নোটিফিকেশন কার্ড: ব্যাকগ্রাউন্ডে ভিডিও বা গান চললে ফোনের নোটিফিকেশন বারে সুন্দর মিডিয়া কার্ড দেখা যাবে।\n\n• স্টপ বাটন (লাল আইকন): নোটিফিকেশন বারে স্টপ বাটনে ক্লিক করলেই সাথে সাথে প্লেয়ার বন্ধ হবে এবং নোটিফিকেশন বার সম্পূর্ণ ক্লিয়ার হয়ে যাবে।"
+                        android:textColor="#334155"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- CARD 3: SHORTS PLAYER -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeColor="#E0E7FF"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_setup_icon_circle_rose"
+                            android:gravity="center"
+                            android:text="⚡"
+                            android:textColor="#FFFFFF"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:text="৩. ভার্টিকাল শর্টস (Shorts) প্লেয়ার"
+                            android:textColor="#0F172A"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:lineSpacingExtra="3dp"
+                        android:text="• নিচে থাকা শর্টস বাটনে ক্লিক করলেই সরাসরি রেন্ডম শর্টস ভিডিও ফুলস্ক্রিনে চালু হবে।\n\n• উপরে বা নিচে সোয়াইপ করে একটার পর একটা চমৎকার শর্টস দেখতে পারবেন।"
+                        android:textColor="#334155"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- CARD 4: CATEGORY TABS -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeColor="#E0E7FF"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_setup_icon_circle_orange"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_setup_sparkles"
+                            android:contentDescription="@null" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:text="৪. হোম ক্যাটাগরি ট্যাব কাস্টমাইজেশন"
+                            android:textColor="#0F172A"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:lineSpacingExtra="3dp"
+                        android:text="• হোমস্ক্রিনে পছন্দের ক্যাটাগরি সাজান: হোমস্ক্রিনের ক্যাটাগরি বারের শেষে থাকা '+' বাটনে চাপ দিয়ে বা সেটিংস থেকে আপনার ইচ্ছামতো ক্যাটাগরি যোগ করতে পারেন।\n\n• এডিট ও ডিলিট: যেকোনো ক্যাটাগরি ট্যাব আপনি রিনেম করতে বা মুছে ফেলতে পারবেন।"
+                        android:textColor="#334155"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- CARD 5: AD-FREE & SPONSORBLOCK -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeColor="#E0E7FF"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_setup_icon_circle_emerald"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_setup_check"
+                            android:contentDescription="@null" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:text="৫. বিজ্ঞাপন ছাড়া ভিডিও ও স্পন্সরব্লক"
+                            android:textColor="#0F172A"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:lineSpacingExtra="3dp"
+                        android:text="• ১০০% বিজ্ঞাপনমুক্ত: কোনো বিজ্ঞাপন ছাড়াই টানা ভিডিও দেখার সুবিধা।\n\n• স্পন্সরব্লক (SponsorBlock): ভিডিওর ভেতরে ইউটিউবারদের স্পন্সরশিপের বিজ্ঞাপনী অংশগুলো নিজে থেকেই স্বয়ংক্রিয়ভাবে স্কিপ হয়ে যায়।"
+                        android:textColor="#334155"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- CARD 6: PLAYER GESTURES -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeColor="#E0E7FF"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_setup_icon_circle_purple"
+                            android:gravity="center"
+                            android:text="🖐️"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:text="৬. প্লেয়ার জেসচার ও শর্টকাট"
+                            android:textColor="#0F172A"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:lineSpacingExtra="3dp"
+                        android:text="• ব্রাইটনেস নিয়ন্ত্রণ: ফুলস্ক্রিন প্লেয়ারের বামপাশে আঙুল দিয়ে উপরে-নিচে টেনে ব্রাইটনেস বাড়ানো ও কমানো যায়।\n\n• ভলিউম নিয়ন্ত্রণ: ফুলস্ক্রিন প্লেয়ারের ডানপাশে আঙুল দিয়ে উপরে-নিচে টেনে সাউন্ড নিয়ন্ত্রণ করা যায়।\n\n• স্পিড পরিবর্তন: সেটিংস গিয়ারে ক্লিক করে ০.২৫x থেকে ৩.০x পর্যন্ত স্পিড কাস্টমাইজ করতে পারবেন।"
+                        android:textColor="#334155"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

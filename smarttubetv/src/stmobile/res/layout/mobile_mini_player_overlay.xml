@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- In-app docked horizontal mini-player bar (matches user screenshot: left 16:9 live video,
+     middle 1-line video title, right Play/Pause + PiP/Return-to-player + Close X, no hide button). -->
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_mini_player"
+    android:contentDescription="@string/mobile_mini_expand"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:layout_gravity="bottom"
+    android:clickable="true"
+    android:focusable="true"
+    android:visibility="gone"
+    app:cardBackgroundColor="@color/mobile_color_surface"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="8dp"
+    app:strokeWidth="0.5dp"
+    app:strokeColor="@color/mobile_color_divider"
+    tools:visibility="visible">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingEnd="4dp">
+
+            <!-- Left 16:9 live video box -->
+            <FrameLayout
+                android:layout_width="106dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/black">
+
+                <androidx.media3.ui.AspectRatioFrameLayout
+                    android:id="@+id/mobile_mini_player_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:id="@+id/mobile_mini_freeze"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:importantForAccessibility="no"
+                        android:scaleType="fitXY"
+                        android:visibility="gone" />
+
+                </androidx.media3.ui.AspectRatioFrameLayout>
+
+            </FrameLayout>
+
+            <!-- Middle: Video Title -->
+            <TextView
+                android:id="@+id/mobile_mini_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="6dp"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-medium"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/mobile_color_on_surface"
+                android:textSize="13.5sp"
+                tools:text="Playing Video Title" />
+
+            <!-- Right: Play/Pause, PiP (Return to player), Close (X) with perfect theme visibility -->
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/mobile_mini_play_pause"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/mobile_mini_play_pause"
+                android:padding="8dp"
+                android:src="@drawable/ic_mini_dock_pause"
+                android:tint="@color/mobile_color_on_surface"
+                app:tint="@color/mobile_color_on_surface" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/mobile_mini_expand"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/mobile_mini_expand"
+                android:padding="8dp"
+                android:src="@drawable/ic_mini_dock_pip"
+                android:tint="@color/mobile_color_on_surface"
+                app:tint="@color/mobile_color_on_surface" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/mobile_mini_close"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/mobile_mini_close"
+                android:padding="9dp"
+                android:src="@drawable/ic_mini_dock_close"
+                android:tint="@color/mobile_color_on_surface"
+                app:tint="@color/mobile_color_on_surface" />
+
+        </LinearLayout>
+
+        <!-- Bottom thin red progress bar -->
+        <ProgressBar
+            android:id="@+id/mobile_mini_bottom_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="bottom"
+            android:max="1000"
+            android:progressDrawable="@drawable/progress_mini_bottom_red"
+            android:visibility="visible" />
+
+    </FrameLayout>
+
+</com.google.android.material.card.MaterialCardView>
