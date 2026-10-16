@@ -227,13 +227,6 @@ public class MobileBrowseActivity extends MobileActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (com.newtube.mobile.ui.setup.MobileFirstRunSetupActivity.isSetupNeeded(this)) {
-            startActivity(new Intent(this, com.newtube.mobile.ui.setup.MobileFirstRunSetupActivity.class));
-            finish();
-            super.onCreate(savedInstanceState);
-            return;
-        }
-
         super.onCreate(savedInstanceState);
 
         // Transitions: same task as the player now (singleTop + reorder, see the manifest note).
@@ -276,6 +269,10 @@ public class MobileBrowseActivity extends MobileActivity
         if (Build.VERSION.SDK_INT >= 33
                 && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, REQUEST_POST_NOTIFICATIONS);
+        }
+
+        if (com.newtube.mobile.ui.setup.MobileFirstRunSetupActivity.isSetupNeeded(this)) {
+            startActivity(new Intent(this, com.newtube.mobile.ui.setup.MobileFirstRunSetupActivity.class));
         }
     }
 

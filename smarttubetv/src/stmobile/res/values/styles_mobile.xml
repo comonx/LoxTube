@@ -494,14 +494,11 @@
         <item name="android:background">@drawable/bg_skeleton_block</item>
     </style>
 
-    <style name="Theme.NewTube.Setup" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.NewTube.Setup" parent="Theme.NewTube">
         <item name="colorPrimary">#4F46E5</item>
         <item name="colorPrimaryDark">#4338CA</item>
         <item name="colorAccent">#6366F1</item>
         <item name="android:windowBackground">#F8FAFC</item>
         <item name="android:statusBarColor">#4F46E5</item>
-        <item name="android:navigationBarColor">#FFFFFF</item>
-        <item name="android:windowLightStatusBar">false</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
     </style>
 </resources>

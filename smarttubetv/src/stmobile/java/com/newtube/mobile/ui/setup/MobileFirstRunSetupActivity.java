@@ -129,12 +129,17 @@ public class MobileFirstRunSetupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mobile_first_run_setup);
-
-        bindViews();
-        setupDefaultCategories();
-        setupClickListeners();
-        updateStepUi(false);
+        try {
+            setContentView(R.layout.activity_mobile_first_run_setup);
+            bindViews();
+            setupDefaultCategories();
+            setupClickListeners();
+            updateStepUi(false);
+        } catch (Throwable t) {
+            t.printStackTrace();
+            setSetupCompleted(this);
+            finish();
+        }
     }
 
     @Override
@@ -543,23 +548,22 @@ public class MobileFirstRunSetupActivity extends AppCompatActivity {
     }
 
     private void finishSetupAndLaunchHome() {
-        // Save selected categories
-        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        prefs.edit().putStringSet(KEY_PREFERRED_CATEGORIES, mSelectedCategories).apply();
-
-        // Mark setup complete
-        setSetupCompleted(this);
-
-        // Launch Home (MobileBrowseActivity)
-        Intent intent = new Intent(this, MobileBrowseActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        try {
+            SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+            prefs.edit().putStringSet(KEY_PREFERRED_CATEGORIES, mSelectedCategories).apply();
+            setSetupCompleted(this);
+        } catch (Throwable ignored) {
+        }
         finish();
     }
 
     // Permission Helpers
     public boolean hasOverlayPermission() {
-        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Settings.canDrawOverlays(this);
+        try {
+            return Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Settings.canDrawOverlays(this);
+        } catch (Throwable t) {
+            return false;
+        }
     }
 
     public void requestOverlayPermission() {
@@ -574,21 +578,32 @@ public class MobileFirstRunSetupActivity extends AppCompatActivity {
     }
 
     public boolean hasNotificationPermission() {
-        if (Build.VERSION.SDK_INT >= 33) {
-            return checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED;
+        try {
+            if (Build.VERSION.SDK_INT >= 33) {
+                return checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED;
+            }
+        } catch (Throwable t) {
+            return true;
         }
         return true;
     }
 
     public void requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= 33) {
-            requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, REQUEST_CODE_NOTIFICATIONS);
+            try {
+                requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, REQUEST_CODE_NOTIFICATIONS);
+            } catch (Throwable ignored) {
+            }
         }
     }
 
     public boolean hasBatteryOptimizationExemption() {
-        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        return pm != null && pm.isIgnoringBatteryOptimizations(getPackageName());
+        try {
+            PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+            return pm != null && pm.isIgnoringBatteryOptimizations(getPackageName());
+        } catch (Throwable t) {
+            return false;
+        }
     }
 
     public void requestBatteryOptimization() {
