@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="/logo.png" width="112" height="112" alt="LoxTube icon">
+<img src="/logo.png" width="152" height="112" alt="LoxTube icon">
 
 # LoxTube
 
