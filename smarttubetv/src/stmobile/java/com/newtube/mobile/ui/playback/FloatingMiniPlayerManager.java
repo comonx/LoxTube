@@ -118,6 +118,8 @@ public final class FloatingMiniPlayerManager {
     private boolean mIsShowing;
     private boolean mIsDocked = false;
     private boolean mDockedOnLeft = false;
+    private int mSavedNormalWidth = 0;
+    private int mSavedNormalHeight = 0;
     private boolean mControlsVisible = true;
     private boolean mControlsLocked = false;
     private boolean mIsUserSeeking = false;
@@ -446,6 +448,9 @@ public final class FloatingMiniPlayerManager {
         if (mDockTabBtn != null) {
             mDockTabBtn.setVisibility(View.GONE);
         }
+        if (mFrame != null) {
+            mFrame.setVisibility(View.VISIBLE);
+        }
         showControls();
         updatePlayPause(player);
         updateAspectRatio(player.getVideoSize());
@@ -469,6 +474,9 @@ public final class FloatingMiniPlayerManager {
         mIsDocked = false;
         if (mDockTabBtn != null) {
             mDockTabBtn.setVisibility(View.GONE);
+        }
+        if (mFrame != null) {
+            mFrame.setVisibility(View.VISIBLE);
         }
 
         ExoPlayer player = getActivePlayer();
@@ -541,7 +549,8 @@ public final class FloatingMiniPlayerManager {
                 heightPx,
                 overlayType,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                        | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+                        | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                        | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 PixelFormat.TRANSLUCENT);
         mLayoutParams.gravity = Gravity.TOP | Gravity.START;
         mLayoutParams.x = Math.max(0, screenW - widthPx - Math.round(16 * density));
@@ -581,7 +590,7 @@ public final class FloatingMiniPlayerManager {
             mLockBtn.setOnClickListener(v -> toggleLock());
         }
         if (mHeadphoneBtn != null) {
-            mHeadphoneBtn.setOnClickListener(v -> hide(true));
+            mHeadphoneBtn.setOnClickListener(v -> dockToSide(false));
         }
         if (mPipExpandBtn != null) {
             mPipExpandBtn.setOnClickListener(v -> openFullPlayer(false));
@@ -700,22 +709,27 @@ public final class FloatingMiniPlayerManager {
                         float dy = event.getRawY() - mDownRawY;
                         if (!mDragging && (Math.abs(dx) > touchSlop || Math.abs(dy) > touchSlop)) {
                             mDragging = true;
-                            if (mIsDocked) {
-                                mIsDocked = false;
-                                if (mDockTabBtn != null) {
-                                    mDockTabBtn.setVisibility(View.GONE);
-                                }
-                            }
                         }
-                        if (mDragging && mIsShowing && mRootView.getParent() != null) {
+                        if (mDragging && mIsShowing && mRootView != null && mRootView.getParent() != null) {
                             float density = mAppContext.getResources().getDisplayMetrics().density;
-                            int dockTabWidth = Math.round(36 * density);
-                            int screenW = mAppContext.getResources().getDisplayMetrics().widthPixels;
                             int screenH = mAppContext.getResources().getDisplayMetrics().heightPixels;
                             int bottomNavInset = mInAppMode ? Math.round(58 * density) : 0;
+                            int maxY = Math.max(0, screenH - mLayoutParams.height - bottomNavInset);
+
+                            if (mIsDocked) {
+                                // While docked, user can drag the tab vertically up and down along the edge
+                                mLayoutParams.y = Math.max(0, Math.min(maxY, mInitialY + Math.round(dy)));
+                                try {
+                                    mWindowManager.updateViewLayout(mRootView, mLayoutParams);
+                                } catch (Exception ignored) {
+                                }
+                                return true;
+                            }
+
+                            int screenW = mAppContext.getResources().getDisplayMetrics().widthPixels;
+                            int dockTabWidth = Math.round(34 * density);
                             int minX = -(mLayoutParams.width - dockTabWidth);
                             int maxX = screenW - dockTabWidth;
-                            int maxY = Math.max(0, screenH - mLayoutParams.height - bottomNavInset);
                             mLayoutParams.x = Math.max(minX, Math.min(maxX, mInitialX + Math.round(dx)));
                             mLayoutParams.y = Math.max(0, Math.min(maxY, mInitialY + Math.round(dy)));
                             try {
@@ -733,6 +747,10 @@ public final class FloatingMiniPlayerManager {
                                 handleTap(v, event);
                             }
                         } else if (mIsShowing && mRootView != null && mRootView.getParent() != null) {
+                            if (mIsDocked) {
+                                mDragging = false;
+                                return true;
+                            }
                             float density = mAppContext.getResources().getDisplayMetrics().density;
                             int screenW = mAppContext.getResources().getDisplayMetrics().widthPixels;
                             int screenH = mAppContext.getResources().getDisplayMetrics().heightPixels;
@@ -740,10 +758,11 @@ public final class FloatingMiniPlayerManager {
                             int maxY = Math.max(0, screenH - mLayoutParams.height - bottomNavInset);
                             mLayoutParams.y = Math.max(0, Math.min(maxY, mLayoutParams.y));
 
-                            if (mLayoutParams.x < -(mLayoutParams.width / 4)) {
-                                dockToSide(true);
-                            } else if (mLayoutParams.x > screenW - (3 * mLayoutParams.width / 4)) {
+                            // Snap to edge-dock if dragged towards either edge
+                            if (mLayoutParams.x > screenW - Math.round(mLayoutParams.width * 0.70f)) {
                                 dockToSide(false);
+                            } else if (mLayoutParams.x < -Math.round(mLayoutParams.width * 0.30f)) {
+                                dockToSide(true);
                             } else {
                                 mIsDocked = false;
                                 if (mDockTabBtn != null) {
@@ -793,21 +812,31 @@ public final class FloatingMiniPlayerManager {
         mDockedOnLeft = left;
 
         hideControls();
+        if (mTopBar != null) mTopBar.setVisibility(View.GONE);
         if (mTopActions != null) mTopActions.setVisibility(View.GONE);
         if (mCenterControls != null) mCenterControls.setVisibility(View.GONE);
         if (mBottomBar != null) mBottomBar.setVisibility(View.GONE);
         if (mBottomScrim != null) mBottomScrim.setVisibility(View.GONE);
         if (mSeekBar != null) mSeekBar.setVisibility(View.GONE);
+        if (mFrame != null) mFrame.setVisibility(View.GONE);
 
         float density = mAppContext.getResources().getDisplayMetrics().density;
         int dockTabWidth = Math.round(36 * density);
+        int dockTabHeight = Math.round(52 * density);
         int screenW = mAppContext.getResources().getDisplayMetrics().widthPixels;
+
+        if (mSavedNormalWidth <= 0 || mLayoutParams.width > dockTabWidth) {
+            mSavedNormalWidth = mLayoutParams.width;
+            mSavedNormalHeight = mLayoutParams.height;
+        }
 
         if (mDockTabBtn != null) {
             ViewGroup.LayoutParams rawLp = mDockTabBtn.getLayoutParams();
             if (rawLp instanceof FrameLayout.LayoutParams) {
                 FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) rawLp;
-                lp.gravity = Gravity.CENTER_VERTICAL | (left ? Gravity.END : Gravity.START);
+                lp.gravity = Gravity.CENTER;
+                lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                lp.height = ViewGroup.LayoutParams.MATCH_PARENT;
                 mDockTabBtn.setLayoutParams(lp);
             }
             mDockTabBtn.setImageResource(left ? R.drawable.ic_float_dock_arrow_right : R.drawable.ic_float_dock_arrow_left);
@@ -815,10 +844,15 @@ public final class FloatingMiniPlayerManager {
             mDockTabBtn.bringToFront();
         }
 
-        if (left) {
-            mLayoutParams.x = -(mLayoutParams.width - dockTabWidth);
-        } else {
-            mLayoutParams.x = screenW - dockTabWidth;
+        mLayoutParams.width = dockTabWidth;
+        mLayoutParams.height = dockTabHeight;
+        mLayoutParams.x = left ? 0 : (screenW - dockTabWidth);
+
+        if (mRootView instanceof com.google.android.material.card.MaterialCardView) {
+            com.google.android.material.card.MaterialCardView card =
+                    (com.google.android.material.card.MaterialCardView) mRootView;
+            card.setRadius(density * 16);
+            card.setCardBackgroundColor(Color.TRANSPARENT);
         }
 
         try {
@@ -835,9 +869,27 @@ public final class FloatingMiniPlayerManager {
         if (mDockTabBtn != null) {
             mDockTabBtn.setVisibility(View.GONE);
         }
+        if (mFrame != null) {
+            mFrame.setVisibility(View.VISIBLE);
+        }
+
+        float density = mAppContext.getResources().getDisplayMetrics().density;
         int screenW = mAppContext.getResources().getDisplayMetrics().widthPixels;
-        int maxX = Math.max(0, screenW - mLayoutParams.width);
-        mLayoutParams.x = mDockedOnLeft ? 0 : maxX;
+        int width = mSavedNormalWidth > 0 ? mSavedNormalWidth : Math.round(265 * density);
+        int height = mSavedNormalHeight > 0 ? mSavedNormalHeight : Math.round(150 * density);
+
+        mLayoutParams.width = width;
+        mLayoutParams.height = height;
+        int maxX = Math.max(0, screenW - width - Math.round(8 * density));
+        mLayoutParams.x = mDockedOnLeft ? Math.round(8 * density) : maxX;
+
+        if (mRootView instanceof com.google.android.material.card.MaterialCardView) {
+            com.google.android.material.card.MaterialCardView card =
+                    (com.google.android.material.card.MaterialCardView) mRootView;
+            card.setRadius(0);
+            card.setCardBackgroundColor(Color.BLACK);
+        }
+
         try {
             mWindowManager.updateViewLayout(mRootView, mLayoutParams);
         } catch (Exception ignored) {
