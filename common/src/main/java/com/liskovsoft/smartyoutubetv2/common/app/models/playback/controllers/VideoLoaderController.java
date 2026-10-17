@@ -244,6 +244,10 @@ public class VideoLoaderController extends BasePlayerController {
     }
 
     public void loadPrevious() {
+        loadPrevious(true);
+    }
+
+    public void loadPrevious(boolean isUserAction) {
         mUnplayableBudget.onUserPick();
         if (getPlayer() == null) {
             return;
@@ -251,12 +255,16 @@ public class VideoLoaderController extends BasePlayerController {
 
         openVideoInt(mSuggestionsController.getPrevious());
 
-        if (getPlayerTweaksData().isPlayerUiOnNextEnabled()) {
+        if (isUserAction && getPlayerTweaksData().isPlayerUiOnNextEnabled()) {
             getPlayer().showOverlay(true);
         }
     }
 
     public void loadNext() {
+        loadNext(true);
+    }
+
+    public void loadNext(boolean isUserAction) {
         if (getPlayer() == null || getVideo() == null) {
             return;
         }
@@ -269,7 +277,7 @@ public class VideoLoaderController extends BasePlayerController {
             waitMetadataSync(getVideo(), true);
         }
 
-        if (getPlayerTweaksData().isPlayerUiOnNextEnabled()) {
+        if (isUserAction && getPlayerTweaksData().isPlayerUiOnNextEnabled()) {
             getPlayer().showOverlay(true);
         }
     }
@@ -841,7 +849,7 @@ public class VideoLoaderController extends BasePlayerController {
                 }
             case PlayerConstants.PLAYBACK_MODE_ALL:
             case PlayerConstants.PLAYBACK_MODE_SHUFFLE:
-                loadNext();
+                loadNext(false);
                 break;
             case PlayerConstants.PLAYBACK_MODE_ONE:
                 if (VERSION.SDK_INT <= 19) {
@@ -855,7 +863,7 @@ public class VideoLoaderController extends BasePlayerController {
                 // Close player if suggestions not shown
                 // Except when playing from queue
                 if (mPlaylist.getNext() != null && !getPlayerTweaksData().isQueueRespectsPlaybackMode()) {
-                    loadNext();
+                    loadNext(false);
                 } else {
                     AppDialogPresenter dialog = getAppDialogPresenter();
                     if (!getPlayer().isSuggestionsShown() && (!dialog.isDialogShown() || dialog.isOverlay())) {
@@ -868,7 +876,7 @@ public class VideoLoaderController extends BasePlayerController {
                 // Stop player after each video.
                 // Except when playing from queue
                 if (mPlaylist.getNext() != null && !getPlayerTweaksData().isQueueRespectsPlaybackMode()) {
-                    loadNext();
+                    loadNext(false);
                 } else {
                     stopPlayback();
                 }
@@ -876,7 +884,7 @@ public class VideoLoaderController extends BasePlayerController {
             case PlayerConstants.PLAYBACK_MODE_LIST:
                 // if video has a playlist load next or restart playlist
                 if (video.hasNextPlaylist() || mPlaylist.getNext() != null) {
-                    loadNext();
+                    loadNext(false);
                 } else {
                     //restartPlaylistIfNeeded();
                     stopPlayback();

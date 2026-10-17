@@ -4158,6 +4158,35 @@ public class MobilePlaybackActivity extends MobileActivity
         }
     }
 
+    private void hideControlsImmediately() {
+        mControlsVisible = false;
+        cancelAutoHide();
+        startProgressUpdates();
+        if (mTimeBar != null) {
+            mTimeBar.setShown(false, false);
+        }
+        if (mControlsRoot != null) {
+            mControlsRoot.animate().cancel();
+            mControlsRoot.setAlpha(0f);
+            mControlsRoot.setVisibility(View.GONE);
+        }
+        if (mPresenter != null) {
+            mPresenter.onControlsShown(false);
+        }
+    }
+
+    private boolean isAutoplayActive() {
+        try {
+            int playbackMode = PlayerData.instance(this).getPlaybackMode();
+            return playbackMode == PlayerConstants.PLAYBACK_MODE_ALL
+                    || playbackMode == PlayerConstants.PLAYBACK_MODE_LIST
+                    || playbackMode == PlayerConstants.PLAYBACK_MODE_SHUFFLE
+                    || playbackMode == PlayerConstants.PLAYBACK_MODE_REVERSE_LIST;
+        } catch (Exception e) {
+            return true;
+        }
+    }
+
     private void armAutoHide() {
         cancelAutoHide();
         if (!mIsStopped) {
@@ -4952,10 +4981,9 @@ public class MobilePlaybackActivity extends MobileActivity
                         playNextShort();
                         break;
                     }
-                    // Surface the replay affordance - but NOT while in PiP: full-size controls would
-                    // appear inside the tiny PiP window and onAutoHideTick would keep re-arming them
-                    // (mIsEnded stays true), so they'd never hide. In PiP the RemoteAction handles it.
-                    if (!mIsInPip) {
+                    // Surface the replay affordance only when autoplay is disabled and not in PiP.
+                    // If autoplay is active (the next video will load automatically), keep controls hidden!
+                    if (!mIsInPip && !isAutoplayActive()) {
                         showControlsInternal(true);
                     }
                     break;
@@ -9395,12 +9423,18 @@ public class MobilePlaybackActivity extends MobileActivity
         // title (bare error-reload Video) must not blank the controls title.
         boolean sameVideo = item != null && Helpers.equals(item.videoId, mWatchVideoId);
         if (!sameVideo) {
+            mIsEnded = false;
             showPlaybackNotice(null);
             cancelHoldSpeed();
             // NEWTUBE(gestures): a drag held across an autoplay would have seeked the new video to
             // the old one's spot (the bar's and a swipe's alike): it ends here, seeking nothing.
             if (mTimeBar != null) {
                 mTimeBar.cancelScrub();
+            }
+            if (mWatchVideoId != null) {
+                // Video transitioned during playback (e.g. autoplay, playlist next, or suggested video).
+                // Ensure player overlay controls remain hidden! Controls should only show on explicit user tap.
+                runOnUiThread(this::hideControlsImmediately);
             }
         }
         if (!sameVideo || (item != null && !TextUtils.isEmpty(item.getTitleFull()))) {
