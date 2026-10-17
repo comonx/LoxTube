@@ -87,6 +87,21 @@ public class CategoryHabitManager {
         if (lower.contains("new") || lower.contains("latest") || lower.contains("recent") || lower.contains("আজকের") || lower.contains("নতুন")) {
             increment("recently_uploaded", 2);
         }
+        if (lower.contains("islam") || lower.contains("waz") || lower.contains("ওয়াজ") || lower.contains("গজল") || lower.contains("কুরআন") || lower.contains("হাদিস")) {
+            increment("islamic", 3);
+        }
+        if (lower.contains("movie") || lower.contains("cinema") || lower.contains("ফিল্ম") || lower.contains("সিনেমা")) {
+            increment("movies", 2);
+        }
+        if (lower.contains("sport") || lower.contains("cricket") || lower.contains("football") || lower.contains("খেলা") || lower.contains("ম্যাচ")) {
+            increment("sports", 2);
+        }
+        if (lower.contains("recipe") || lower.contains("cooking") || lower.contains("রান্না") || lower.contains("food")) {
+            increment("food", 2);
+        }
+        if (lower.contains("travel") || lower.contains("tour") || lower.contains("vlog") || lower.contains("ভ্রমণ")) {
+            increment("travel", 2);
+        }
     }
 
     private void increment(String categoryId, int weight) {
@@ -172,15 +187,57 @@ public class CategoryHabitManager {
     }
 
     /**
+     * 14 Popular predefined categories (along with All = 15 total).
+     */
+    private List<CategoryChip> getPredefinedCategories() {
+        List<CategoryChip> list = new ArrayList<>();
+        list.add(CategoryChip.createNews());
+        list.add(CategoryChip.createSearch("natok", "নাটক", "বাংলা নাটক drama"));
+        list.add(CategoryChip.createMusic());
+        list.add(CategoryChip.createGaming());
+        list.add(CategoryChip.createSearch("movies", "সিনেমা", "movie বাংলা সিনেমা"));
+        list.add(CategoryChip.createSearch("comedy", "কমেডি", "comedy funny বাংলা কমেডি"));
+        list.add(CategoryChip.createSearch("sports", "খেলা", "sports cricket football খেলা"));
+        list.add(CategoryChip.createSearch("tech", "প্রযুক্তি", "tech smartphone গ্যাজেট"));
+        list.add(CategoryChip.createSearch("islamic", "ইসলামিক", "islamic waz ওয়াজ গজল"));
+        list.add(CategoryChip.createSearch("animation", "কার্টুন", "animation cartoon কার্টুন"));
+        list.add(CategoryChip.createSearch("dubbed", "ডাবিং", "বাংলা ডাবিং dubbed movie"));
+        list.add(CategoryChip.createSearch("food", "রান্না", "cooking recipe খাবার রেসিপি"));
+        list.add(CategoryChip.createSearch("travel", "ভ্রমণ", "travel vlog ভ্রমণ"));
+        list.add(CategoryChip.createLive());
+        return list;
+    }
+
+    /**
      * Returns the ordered list of CategoryChips:
-     * "All" is always first at index 0.
-     * Then user-created custom tabs.
-     * "+ ট্যাব যোগ করুন" action chip at the end.
+     * 1. "All" is always first at index 0.
+     * 2. User-created custom tabs (permanently stored, never deleted).
+     * 3. 14 predefined popular categories dynamically sorted by user habit score.
+     * 4. "+ ট্যাব যোগ করুন" action chip at the end.
      */
     public List<CategoryChip> getOrderedChips() {
         List<CategoryChip> result = new ArrayList<>();
         result.add(CategoryChip.createAll());
-        result.addAll(getCustomTabs());
+
+        // Custom tabs created by user are always preserved
+        List<CategoryChip> customTabs = getCustomTabs();
+        result.addAll(customTabs);
+
+        // Predefined categories sorted adaptively according to user watch habits
+        List<CategoryChip> predefined = getPredefinedCategories();
+        // Remove any predefined that might clash with custom tabs by id
+        Map<String, Integer> scores = new HashMap<>();
+        for (CategoryChip chip : predefined) {
+            scores.put(chip.getId(), getScore(chip.getId()));
+        }
+
+        Collections.sort(predefined, (a, b) -> {
+            int scoreA = scores.containsKey(a.getId()) ? scores.get(a.getId()) : 0;
+            int scoreB = scores.containsKey(b.getId()) ? scores.get(b.getId()) : 0;
+            return Integer.compare(scoreB, scoreA); // highest score first
+        });
+
+        result.addAll(predefined);
         result.add(CategoryChip.createAction("manage_categories", "+ ট্যাব যোগ করুন"));
         return result;
     }

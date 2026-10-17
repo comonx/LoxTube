@@ -610,13 +610,70 @@ public class MobilePlaybackActivity extends MobileActivity
         }
         if (intent.getBooleanExtra(EXTRA_FORCE_FULLSCREEN, false)) {
             intent.removeExtra(EXTRA_FORCE_FULLSCREEN);
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-            armOrientationHandBack(Configuration.ORIENTATION_LANDSCAPE);
+            expandFromFloating(true);
         } else if (intent.getBooleanExtra(EXTRA_FORCE_PORTRAIT, false)) {
             intent.removeExtra(EXTRA_FORCE_PORTRAIT);
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            armOrientationHandBack(Configuration.ORIENTATION_PORTRAIT);
+            expandFromFloating(false);
         }
+    }
+
+    /**
+     * Fully expands the video player when returning from the floating mini player.
+     * Restores surfaces, resets morph scaling, and makes all watch views completely visible.
+     */
+    public void expandFromFloating(boolean forceLandscapeFullscreen) {
+        cancelClose();
+        FloatingMiniPlayerManager.instance(this).hide(false);
+        restoreSessionSurface();
+        resetMorph();
+        reattachVideoTexture();
+        mIsResumed = true;
+        mSuppressAutoPip = false;
+        mDismissDragActive = false;
+        mPipEnterPending = false;
+        setBackgroundAudioMode(false);
+        if (mExoPlayerController != null) {
+            mExoPlayerController.clearSmallWindowViewport("floating_expand");
+        }
+        if (getViewManager() != null) {
+            getViewManager().addTop(this);
+        }
+
+        int targetOrientation = forceLandscapeFullscreen ?
+                Configuration.ORIENTATION_LANDSCAPE : Configuration.ORIENTATION_PORTRAIT;
+        int reqOrientation = forceLandscapeFullscreen ?
+                ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE : ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        setRequestedOrientation(reqOrientation);
+        armOrientationHandBack(targetOrientation);
+        applyWatchLayoutForOrientation(targetOrientation);
+        applySystemBarsForOrientation(targetOrientation);
+        updateFullscreenIcon(targetOrientation);
+
+        if (mContainer != null) {
+            mContainer.setVisibility(View.VISIBLE);
+            mContainer.setAlpha(1f);
+        }
+        if (mPlayerView != null) {
+            mPlayerView.setVisibility(View.VISIBLE);
+            mPlayerView.setAlpha(1f);
+        }
+        if (mVideoArea != null) {
+            mVideoArea.setVisibility(View.VISIBLE);
+            mVideoArea.setAlpha(1f);
+            mVideoArea.setScaleX(1f);
+            mVideoArea.setScaleY(1f);
+            mVideoArea.setTranslationX(0f);
+            mVideoArea.setTranslationY(0f);
+        }
+        if (mWatchContent != null) {
+            mWatchContent.setVisibility(View.VISIBLE);
+            mWatchContent.setAlpha(1f);
+        }
+        if (mWatchScroll != null) {
+            mWatchScroll.setVisibility(targetOrientation == Configuration.ORIENTATION_PORTRAIT ? View.VISIBLE : View.GONE);
+            mWatchScroll.setAlpha(1f);
+        }
+        showControlsInternal(false);
     }
 
     /**

@@ -178,6 +178,8 @@ public class MobileBrowseActivity extends MobileActivity
     private MaterialButton mErrorAction;
     private ImageButton mSearchButton;
     private ImageButton mCastButton;
+    private View mTopProfileButton;
+    private ImageView mTopProfileAvatar;
     /** Process-wide cast session singleton; Browse only reads state + opens the picker. */
     private CastSessionManager mCastSessionManager;
 
@@ -296,6 +298,18 @@ public class MobileBrowseActivity extends MobileActivity
         mErrorAction = findViewById(R.id.mobile_error_action);
         mSearchButton = findViewById(R.id.mobile_search_button);
         mCastButton = findViewById(R.id.mobile_cast_button);
+        mTopProfileButton = findViewById(R.id.mobile_profile_button);
+        mTopProfileAvatar = findViewById(R.id.mobile_top_profile_avatar);
+        if (mTopProfileButton != null) {
+            mTopProfileButton.setOnClickListener(v -> {
+                if (mBottomNav != null && mBottomNav.getMenu().findItem(YOU_ITEM_ID) != null) {
+                    mBottomNav.setSelectedItemId(YOU_ITEM_ID);
+                } else {
+                    showYouPanel();
+                }
+            });
+        }
+        updateAccountRow();
         mTopBar = new BrowseTopBar(this, () -> getOnBackPressedDispatcher().onBackPressed());
 
         mMiniPlayer = new com.newtube.mobile.ui.playback.MobileMiniPlayerController(this);
@@ -1907,11 +1921,23 @@ public class MobileBrowseActivity extends MobileActivity
      * style), the "Sign in" entry otherwise.
      */
     private void updateAccountRow() {
+        Account account = MediaServiceManager.instance().getSelectedAccount();
+        if (mTopProfileAvatar != null) {
+            if (account != null && account.getAvatarImageUrl() != null && !account.getAvatarImageUrl().isEmpty()) {
+                com.bumptech.glide.Glide.with(this)
+                        .load(account.getAvatarImageUrl())
+                        .circleCrop()
+                        .placeholder(R.drawable.ic_mobile_account)
+                        .into(mTopProfileAvatar);
+            } else {
+                mTopProfileAvatar.setImageResource(R.drawable.ic_mobile_account);
+            }
+        }
+
         if (mYouAccountText == null) {
             return;
         }
 
-        Account account = MediaServiceManager.instance().getSelectedAccount();
         if (account != null) {
             String name = account.getName() != null ? account.getName() : account.getEmail();
             mYouAccountText.setText(name != null ? name : getString(R.string.settings_accounts));

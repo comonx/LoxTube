@@ -197,6 +197,8 @@ public final class FloatingMiniPlayerManager {
         initLifecycle();
     }
 
+    private java.lang.ref.WeakReference<Activity> mCurrentResumedActivity = new java.lang.ref.WeakReference<>(null);
+
     private void initLifecycle() {
         if (mAppContext instanceof Application) {
             Application app = (Application) mAppContext;
@@ -212,6 +214,7 @@ public final class FloatingMiniPlayerManager {
 
                 @Override
                 public void onActivityResumed(Activity activity) {
+                    mCurrentResumedActivity = new java.lang.ref.WeakReference<>(activity);
                     updateInAppMode();
                 }
 
@@ -1227,18 +1230,47 @@ public final class FloatingMiniPlayerManager {
         }
         hide(false);
 
-        Intent intent = new Intent(mAppContext, MobilePlaybackActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                | Intent.FLAG_ACTIVITY_SINGLE_TOP
-                | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        if (forceLandscapeFullscreen) {
-            intent.putExtra(MobilePlaybackActivity.EXTRA_FORCE_FULLSCREEN, true);
+        MobilePlaybackActivity activity = MobilePlaybackActivity.getCurrentInstance();
+        Activity topActivity = mCurrentResumedActivity != null ? mCurrentResumedActivity.get() : null;
+
+        if (activity != null && !activity.isFinishing() && !activity.isDestroyed()) {
+            activity.expandFromFloating(forceLandscapeFullscreen);
+
+            Context caller = (topActivity != null && !topActivity.isFinishing() && !topActivity.isDestroyed())
+                    ? topActivity : activity;
+            Intent intent = new Intent(caller, MobilePlaybackActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            if (forceLandscapeFullscreen) {
+                intent.putExtra(MobilePlaybackActivity.EXTRA_FORCE_FULLSCREEN, true);
+            } else {
+                intent.putExtra(MobilePlaybackActivity.EXTRA_FORCE_PORTRAIT, true);
+            }
+            try {
+                caller.startActivity(intent);
+            } catch (Exception e) {
+                try {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mAppContext.startActivity(intent);
+                } catch (Exception ignored) {}
+            }
         } else {
-            intent.putExtra(MobilePlaybackActivity.EXTRA_FORCE_PORTRAIT, true);
-        }
-        try {
-            mAppContext.startActivity(intent);
-        } catch (Exception ignored) {
+            Intent intent = new Intent(mAppContext, MobilePlaybackActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            if (forceLandscapeFullscreen) {
+                intent.putExtra(MobilePlaybackActivity.EXTRA_FORCE_FULLSCREEN, true);
+            } else {
+                intent.putExtra(MobilePlaybackActivity.EXTRA_FORCE_PORTRAIT, true);
+            }
+            try {
+                if (topActivity != null && !topActivity.isFinishing()) {
+                    topActivity.startActivity(intent);
+                } else {
+                    mAppContext.startActivity(intent);
+                }
+            } catch (Exception ignored) {
+                com.liskovsoft.smartyoutubetv2.common.app.views.ViewManager.instance(mAppContext)
+                        .startView(com.liskovsoft.smartyoutubetv2.common.app.views.PlaybackView.class);
+            }
         }
     }
 

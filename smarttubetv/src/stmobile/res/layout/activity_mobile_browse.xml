@@ -78,34 +78,54 @@
          accent while a session is connected (MobileBrowseActivity.updateCastIconTint). -->
     <ImageButton
         android:id="@+id/mobile_cast_button"
-        android:layout_width="48dp"
+        android:layout_width="40dp"
         android:layout_height="@dimen/mobile_title_bar_height"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/mobile_cast_button"
         android:elevation="6dp"
-        android:padding="12dp"
+        android:padding="9dp"
         android:src="@drawable/ic_mobile_cast"
         app:layout_constraintEnd_toStartOf="@id/mobile_search_button"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/mobile_search_button"
-        android:layout_width="48dp"
+        android:layout_width="40dp"
         android:layout_height="@dimen/mobile_title_bar_height"
-        android:layout_marginEnd="4dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/mobile_search_button"
         android:elevation="6dp"
-        android:padding="12dp"
+        android:padding="9dp"
         android:src="@drawable/ic_mobile_search"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/mobile_profile_button"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Top Profile Avatar Button: Shows logged-in user profile avatar or default account icon -->
+    <FrameLayout
+        android:id="@+id/mobile_profile_button"
+        android:layout_width="40dp"
+        android:layout_height="@dimen/mobile_title_bar_height"
+        android:layout_marginEnd="6dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Profile"
+        android:elevation="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/mobile_top_profile_avatar"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_mobile_account" />
+    </FrameLayout>
 
     <!-- Horizontal category chips / filter tabs below the top bar -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mobile_category_chips"
         android:layout_width="0dp"
-        android:layout_height="38dp"
+        android:layout_height="32dp"
         android:background="@color/mobile_color_background"
         android:clipToPadding="false"
         android:elevation="4dp"
@@ -113,8 +133,8 @@
         android:overScrollMode="never"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
         android:scrollbars="none"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
