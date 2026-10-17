@@ -261,7 +261,14 @@ public class MobilePlaybackService extends Service {
     }
 
     public void enterPipFromNotification() {
-        Utils.post(() -> FloatingMiniPlayerManager.instance(MobilePlaybackService.this).toggleFromNotification());
+        Utils.post(() -> {
+            FloatingMiniPlayerManager floating = FloatingMiniPlayerManager.instance(MobilePlaybackService.this);
+            if (FloatingMiniPlayerManager.isShowing()) {
+                floating.openFullPlayer(false);
+            } else {
+                floating.show(true);
+            }
+        });
     }
 
     public void stopPlaybackFromNotification() {
@@ -413,7 +420,12 @@ public class MobilePlaybackService extends Service {
                     @Nullable
                     @Override
                     public PendingIntent createCurrentContentIntent(Player player) {
-                        return contentIntent;
+                        Intent intent = new Intent(MobilePlaybackService.this, MobilePlaybackActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra(MobilePlaybackActivity.EXTRA_FORCE_PORTRAIT, true);
+                        int piFlags = PendingIntent.FLAG_UPDATE_CURRENT
+                                | (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE : 0);
+                        return PendingIntent.getActivity(MobilePlaybackService.this, 0, intent, piFlags);
                     }
 
                     @Nullable
@@ -538,6 +550,7 @@ public class MobilePlaybackService extends Service {
         mNotificationManager.setUseRewindAction(false);
         mNotificationManager.setUseFastForwardAction(false);
         mNotificationManager.setUseStopAction(false);
+        mNotificationManager.setPriority(androidx.core.app.NotificationCompat.PRIORITY_MAX);
         // media3 1.5+ dropped the MediaSessionCompat.Token overload; unwrap the platform token
         // (MediaSessionCompat.Token.getToken() returns the framework MediaSession.Token).
         mNotificationManager.setMediaSessionToken(

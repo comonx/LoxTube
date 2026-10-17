@@ -132,6 +132,37 @@ public final class FloatingMiniPlayerManager {
     private final Runnable mTickRunnable = this::onTick;
     private final Runnable mHideControlsRunnable = this::hideControls;
 
+    private final Runnable mDimDockTabRunnable = () -> {
+        if (mIsDocked && mDockTabBtn != null && mDockTabBtn.getVisibility() == View.VISIBLE) {
+            mDockTabBtn.animate().cancel();
+            mDockTabBtn.animate().alpha(0.25f).setDuration(400).start();
+        }
+    };
+
+    private void scheduleDimDockTab() {
+        cancelDimDockTab();
+        Utils.postDelayed(mDimDockTabRunnable, 10000L);
+    }
+
+    private void cancelDimDockTab() {
+        Utils.removeCallbacks(mDimDockTabRunnable);
+        if (mDockTabBtn != null) {
+            mDockTabBtn.animate().cancel();
+            mDockTabBtn.setAlpha(1.0f);
+        }
+    }
+
+    private void dismissToBottom() {
+        ExoPlayer player = getActivePlayer();
+        if (player != null) {
+            try {
+                player.setPlayWhenReady(false);
+            } catch (Exception ignored) {
+            }
+        }
+        hide(true);
+    }
+
     /**
      * Update the keep‑screen‑on flag based on playback state and visibility.
      * When the mini‑player is visible on screen AND the video is playing
@@ -256,6 +287,17 @@ public final class FloatingMiniPlayerManager {
         boolean changed = (mInAppMode != inApp);
         mInAppMode = inApp;
 
+        if (mIsDocked) {
+            if (!inApp) {
+                // When app goes to background while docked, keep it tucked at screen edge
+                return;
+            } else {
+                // When re-entering the app from outside while docked, restore mini player inside app
+                undockToScreen();
+                return;
+            }
+        }
+
         float density = mAppContext.getResources().getDisplayMetrics().density;
         int screenW = mAppContext.getResources().getDisplayMetrics().widthPixels;
         int screenH = mAppContext.getResources().getDisplayMetrics().heightPixels;
@@ -264,9 +306,9 @@ public final class FloatingMiniPlayerManager {
                 mRootView.findViewById(R.id.floating_mini_card);
 
         if (inApp) {
-            // In-app mode: Reduced width (~195dp), smaller size, bottom-right hovering above bottom nav
-            int widthPx = Math.round(195 * density);
-            int heightPx = Math.round(110 * density);
+            // In-app mode: 240dp x 135dp (16:9), hovering above bottom navigation bar with rounded corners
+            int widthPx = Math.round(240 * density);
+            int heightPx = Math.round(135 * density);
             int marginEndPx = Math.round(12 * density);
             int marginBottomPx = Math.round(58 * density);
             int maxY = Math.max(0, screenH - heightPx - marginBottomPx);
@@ -282,68 +324,7 @@ public final class FloatingMiniPlayerManager {
 
             if (card != null) {
                 card.setRadius(Math.round(8 * density));
-            }
-
-            // 1. Watermark
-            updateWatermarkVisibility();
-            // 2. Lock button
-            if (mLockBtn != null) {
-                mLockBtn.setVisibility(View.GONE);
-            }
-            // 3. Sound / Volume button
-            if (mVolumeBtn != null) {
-                mVolumeBtn.setVisibility(View.GONE);
-            }
-            // 4. Fullscreen button
-            if (mFullscreenBtn != null) {
-                mFullscreenBtn.setVisibility(View.GONE);
-            }
-            // 5. Video progress bar: Always visible thin red progress line, non-draggable
-            if (mSeekBar != null) {
-                mSeekBar.setVisibility(View.VISIBLE);
-                mSeekBar.setOnTouchListener((v, e) -> true);
-                try {
-                    mSeekBar.setThumb(ContextCompat.getDrawable(mAppContext, R.drawable.bg_float_thumb_invisible));
-                    mSeekBar.setThumbOffset(0);
-                } catch (Exception ignored) {
-                }
-            }
-            // 6. Time text
-            if (mTimeText != null) {
-                mTimeText.setVisibility(View.GONE);
-            }
-            // 7. Headphone button
-            if (mHeadphoneBtn != null) {
-                mHeadphoneBtn.setVisibility(View.GONE);
-            }
-            // 8. Bottom bar and scrim
-            if (mBottomBar != null) {
-                mBottomBar.setVisibility(View.GONE);
-            }
-            if (mBottomScrim != null) {
-                mBottomScrim.setVisibility(View.GONE);
-            }
-            if (mRewindBtn != null) {
-                mRewindBtn.setVisibility(View.GONE);
-            }
-            if (mForwardBtn != null) {
-                mForwardBtn.setVisibility(View.GONE);
-            }
-
-            if (mCloseBtn != null) {
-                mCloseBtn.setVisibility(mControlsVisible ? View.VISIBLE : View.GONE);
-            }
-            if (mPipExpandBtn != null) {
-                mPipExpandBtn.setVisibility(mControlsVisible ? View.VISIBLE : View.GONE);
-            }
-            if (mTopActions != null) {
-                mTopActions.setVisibility(mControlsVisible ? View.VISIBLE : View.GONE);
-            }
-            if (mPlayPauseBtn != null) {
-                mPlayPauseBtn.setVisibility(mControlsVisible ? View.VISIBLE : View.GONE);
-            }
-            if (mCenterControls != null) {
-                mCenterControls.setVisibility(mControlsVisible ? View.VISIBLE : View.GONE);
+                card.setCardBackgroundColor(Color.BLACK);
             }
         } else {
             // Outside the app: Standard 265dp x 150dp floating mini-player
@@ -354,14 +335,15 @@ public final class FloatingMiniPlayerManager {
 
             if (card != null) {
                 card.setRadius(0f);
+                card.setCardBackgroundColor(Color.BLACK);
             }
+        }
 
-            updateWatermarkVisibility();
-            if (mControlsVisible) {
-                applyLockState(mControlsLocked);
-            } else {
-                hideControls();
-            }
+        updateWatermarkVisibility();
+        if (mControlsVisible) {
+            applyLockState(mControlsLocked);
+        } else {
+            hideControls();
         }
 
         if (mIsShowing && mRootView.getParent() != null) {
@@ -471,6 +453,7 @@ public final class FloatingMiniPlayerManager {
         Utils.removeCallbacks(mSingleTapRunnable);
         Utils.removeCallbacks(mHideSeekIndicatorRunnable);
         hideSeekIndicators();
+        cancelDimDockTab();
         mIsDocked = false;
         if (mDockTabBtn != null) {
             mDockTabBtn.setVisibility(View.GONE);
@@ -703,6 +686,9 @@ public final class FloatingMiniPlayerManager {
                         mDownRawX = event.getRawX();
                         mDownRawY = event.getRawY();
                         mDragging = false;
+                        if (mIsDocked) {
+                            cancelDimDockTab();
+                        }
                         return true;
                     case MotionEvent.ACTION_MOVE: {
                         float dx = event.getRawX() - mDownRawX;
@@ -712,12 +698,16 @@ public final class FloatingMiniPlayerManager {
                         }
                         if (mDragging && mIsShowing && mRootView != null && mRootView.getParent() != null) {
                             float density = mAppContext.getResources().getDisplayMetrics().density;
+                            int screenW = mAppContext.getResources().getDisplayMetrics().widthPixels;
                             int screenH = mAppContext.getResources().getDisplayMetrics().heightPixels;
                             int bottomNavInset = mInAppMode ? Math.round(58 * density) : 0;
                             int maxY = Math.max(0, screenH - mLayoutParams.height - bottomNavInset);
 
                             if (mIsDocked) {
-                                // While docked, user can drag the tab vertically up and down along the edge
+                                // While docked, user can drag the tab vertically AND horizontally anywhere
+                                int dockTabWidth = Math.round(36 * density);
+                                int maxX = screenW - dockTabWidth;
+                                mLayoutParams.x = Math.max(0, Math.min(maxX, mInitialX + Math.round(dx)));
                                 mLayoutParams.y = Math.max(0, Math.min(maxY, mInitialY + Math.round(dy)));
                                 try {
                                     mWindowManager.updateViewLayout(mRootView, mLayoutParams);
@@ -726,7 +716,6 @@ public final class FloatingMiniPlayerManager {
                                 return true;
                             }
 
-                            int screenW = mAppContext.getResources().getDisplayMetrics().widthPixels;
                             int dockTabWidth = Math.round(34 * density);
                             int minX = -(mLayoutParams.width - dockTabWidth);
                             int maxX = screenW - dockTabWidth;
@@ -740,20 +729,28 @@ public final class FloatingMiniPlayerManager {
                         return true;
                     }
                     case MotionEvent.ACTION_UP:
-                        if (!mDragging) {
-                            if (mIsDocked) {
-                                undockToScreen();
-                            } else {
-                                handleTap(v, event);
-                            }
-                        } else if (mIsShowing && mRootView != null && mRootView.getParent() != null) {
-                            if (mIsDocked) {
+                    case MotionEvent.ACTION_CANCEL:
+                        if (mDragging) {
+                            float density = mAppContext.getResources().getDisplayMetrics().density;
+                            int screenH = mAppContext.getResources().getDisplayMetrics().heightPixels;
+                            int screenW = mAppContext.getResources().getDisplayMetrics().widthPixels;
+                            int bottomDismissThreshold = screenH - Math.round(110 * density);
+
+                            // Drag to bottom center: dismiss floating window, pause video, preserve notification card
+                            if (mLayoutParams.y >= bottomDismissThreshold || event.getRawY() >= screenH - Math.round(80 * density)) {
+                                dismissToBottom();
                                 mDragging = false;
                                 return true;
                             }
-                            float density = mAppContext.getResources().getDisplayMetrics().density;
-                            int screenW = mAppContext.getResources().getDisplayMetrics().widthPixels;
-                            int screenH = mAppContext.getResources().getDisplayMetrics().heightPixels;
+
+                            if (mIsDocked) {
+                                mDragging = false;
+                                int dockTabWidth = Math.round(36 * density);
+                                boolean snapToLeft = (mLayoutParams.x + dockTabWidth / 2) < (screenW / 2);
+                                dockToSide(snapToLeft);
+                                return true;
+                            }
+
                             int bottomNavInset = mInAppMode ? Math.round(58 * density) : 0;
                             int maxY = Math.max(0, screenH - mLayoutParams.height - bottomNavInset);
                             mLayoutParams.y = Math.max(0, Math.min(maxY, mLayoutParams.y));
@@ -776,10 +773,13 @@ public final class FloatingMiniPlayerManager {
                                 } catch (Exception ignored) {
                                 }
                             }
+                        } else {
+                            if (mIsDocked) {
+                                undockToScreen();
+                            } else {
+                                handleTap(v, event);
+                            }
                         }
-                        mDragging = false;
-                        return true;
-                    case MotionEvent.ACTION_CANCEL:
                         mDragging = false;
                         return true;
                     default:
@@ -804,7 +804,7 @@ public final class FloatingMiniPlayerManager {
         }
     }
 
-    private void dockToSide(boolean left) {
+    public void dockToSide(boolean left) {
         if (!mIsShowing || mRootView == null || mRootView.getParent() == null) {
             return;
         }
@@ -841,6 +841,7 @@ public final class FloatingMiniPlayerManager {
             }
             mDockTabBtn.setImageResource(left ? R.drawable.ic_float_dock_arrow_right : R.drawable.ic_float_dock_arrow_left);
             mDockTabBtn.setVisibility(View.VISIBLE);
+            mDockTabBtn.setAlpha(1.0f);
             mDockTabBtn.bringToFront();
         }
 
@@ -859,6 +860,8 @@ public final class FloatingMiniPlayerManager {
             mWindowManager.updateViewLayout(mRootView, mLayoutParams);
         } catch (Exception ignored) {
         }
+
+        scheduleDimDockTab();
     }
 
     private void undockToScreen() {
@@ -866,6 +869,8 @@ public final class FloatingMiniPlayerManager {
             return;
         }
         mIsDocked = false;
+        cancelDimDockTab();
+
         if (mDockTabBtn != null) {
             mDockTabBtn.setVisibility(View.GONE);
         }
@@ -875,8 +880,10 @@ public final class FloatingMiniPlayerManager {
 
         float density = mAppContext.getResources().getDisplayMetrics().density;
         int screenW = mAppContext.getResources().getDisplayMetrics().widthPixels;
-        int width = mSavedNormalWidth > 0 ? mSavedNormalWidth : Math.round(265 * density);
-        int height = mSavedNormalHeight > 0 ? mSavedNormalHeight : Math.round(150 * density);
+        int defaultWidth = mInAppMode ? Math.round(240 * density) : Math.round(265 * density);
+        int defaultHeight = mInAppMode ? Math.round(135 * density) : Math.round(150 * density);
+        int width = mSavedNormalWidth > 0 ? mSavedNormalWidth : defaultWidth;
+        int height = mSavedNormalHeight > 0 ? mSavedNormalHeight : defaultHeight;
 
         mLayoutParams.width = width;
         mLayoutParams.height = height;
@@ -886,13 +893,16 @@ public final class FloatingMiniPlayerManager {
         if (mRootView instanceof com.google.android.material.card.MaterialCardView) {
             com.google.android.material.card.MaterialCardView card =
                     (com.google.android.material.card.MaterialCardView) mRootView;
-            card.setRadius(0);
+            card.setRadius(mInAppMode ? density * 8 : 0);
             card.setCardBackgroundColor(Color.BLACK);
         }
 
         try {
             mWindowManager.updateViewLayout(mRootView, mLayoutParams);
         } catch (Exception ignored) {
+        }
+        if (mTopBar != null) {
+            mTopBar.setVisibility(View.VISIBLE);
         }
         if (mSeekBar != null) {
             mSeekBar.setVisibility(View.VISIBLE);
@@ -1041,10 +1051,6 @@ public final class FloatingMiniPlayerManager {
     }
 
     private void applyLockState(boolean locked) {
-        if (mInAppMode) {
-            setInAppMode(true);
-            return;
-        }
         mControlsLocked = locked;
         mControlsVisible = true;
         com.liskovsoft.smartyoutubetv2.common.prefs.AppPrefs prefs =
@@ -1084,6 +1090,9 @@ public final class FloatingMiniPlayerManager {
         }
         if (mRewindBtn != null) {
             mRewindBtn.setVisibility((!locked && seekEnabled) ? View.VISIBLE : View.GONE);
+        }
+        if (mPlayPauseBtn != null) {
+            mPlayPauseBtn.setVisibility(locked ? View.GONE : View.VISIBLE);
         }
         if (mForwardBtn != null) {
             mForwardBtn.setVisibility((!locked && seekEnabled) ? View.VISIBLE : View.GONE);
@@ -1148,37 +1157,6 @@ public final class FloatingMiniPlayerManager {
             return;
         }
         mControlsVisible = true;
-        if (mInAppMode) {
-            if (mCloseBtn != null) mCloseBtn.setVisibility(View.VISIBLE);
-            if (mPipExpandBtn != null) mPipExpandBtn.setVisibility(View.VISIBLE);
-            if (mTopActions != null) {
-                mTopActions.animate().cancel();
-                mTopActions.setVisibility(View.VISIBLE);
-                mTopActions.setAlpha(1f);
-            }
-            if (mPlayPauseBtn != null) mPlayPauseBtn.setVisibility(View.VISIBLE);
-            if (mCenterControls != null) {
-                mCenterControls.animate().cancel();
-                mCenterControls.setVisibility(View.VISIBLE);
-                mCenterControls.setAlpha(1f);
-            }
-            updateWatermarkVisibility();
-            if (mLockBtn != null) mLockBtn.setVisibility(View.GONE);
-            if (mHeadphoneBtn != null) mHeadphoneBtn.setVisibility(View.GONE);
-            if (mFullscreenBtn != null) mFullscreenBtn.setVisibility(View.GONE);
-            if (mVolumeBtn != null) mVolumeBtn.setVisibility(View.GONE);
-            if (mRewindBtn != null) mRewindBtn.setVisibility(View.GONE);
-            if (mForwardBtn != null) mForwardBtn.setVisibility(View.GONE);
-            if (mSeekBar != null) {
-                mSeekBar.setVisibility(View.VISIBLE);
-                mSeekBar.setOnTouchListener((v, e) -> true);
-            }
-            if (mTimeText != null) mTimeText.setVisibility(View.GONE);
-            if (mBottomBar != null) mBottomBar.setVisibility(View.GONE);
-            if (mBottomScrim != null) mBottomScrim.setVisibility(View.GONE);
-            rescheduleAutoHide();
-            return;
-        }
 
         if (mSeekBar != null) {
             try {
@@ -1206,31 +1184,6 @@ public final class FloatingMiniPlayerManager {
     private void hideControls() {
         mControlsVisible = false;
         Utils.removeCallbacks(mHideControlsRunnable);
-        if (mInAppMode) {
-            if (mTopActions != null) {
-                mTopActions.animate().cancel();
-                mTopActions.animate().alpha(0f).setDuration(200).withEndAction(() -> {
-                    if (!mControlsVisible && mTopActions != null) {
-                        mTopActions.setVisibility(View.GONE);
-                    }
-                }).start();
-            }
-            if (mCenterControls != null) {
-                mCenterControls.animate().cancel();
-                mCenterControls.animate().alpha(0f).setDuration(200).withEndAction(() -> {
-                    if (!mControlsVisible && mCenterControls != null) {
-                        mCenterControls.setVisibility(View.GONE);
-                    }
-                }).start();
-            }
-            if (mBottomBar != null) mBottomBar.setVisibility(View.GONE);
-            if (mBottomScrim != null) mBottomScrim.setVisibility(View.GONE);
-            if (mSeekBar != null) {
-                mSeekBar.setVisibility(View.VISIBLE);
-                mSeekBar.setOnTouchListener((v, e) -> true);
-            }
-            return;
-        }
 
         if (mSeekBar != null) {
             try {
@@ -1275,7 +1228,7 @@ public final class FloatingMiniPlayerManager {
         }
     }
 
-    private void openFullPlayer(boolean forceLandscapeFullscreen) {
+    public void openFullPlayer(boolean forceLandscapeFullscreen) {
         ExoPlayer player = getActivePlayer();
         if (player != null && player.getCurrentPosition() > 0) {
             MiniPlayerBridge.setResumePosition(player.getCurrentPosition());
@@ -1437,13 +1390,7 @@ public final class FloatingMiniPlayerManager {
                     mSeekBar.setProgress(progress);
                 }
             }
-            if (mInAppMode) {
-                if (mTimeText != null) mTimeText.setVisibility(View.GONE);
-                if (mBottomBar != null) mBottomBar.setVisibility(View.GONE);
-                if (mBottomScrim != null) mBottomScrim.setVisibility(View.GONE);
-            } else {
-                updateTimeDisplay(current, duration);
-            }
+            updateTimeDisplay(current, duration);
         } else if (mTimeText != null) {
             mTimeText.setText("");
         }

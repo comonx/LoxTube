@@ -344,6 +344,12 @@ public class MobileBrowseActivity extends MobileActivity
         mContentSwipe.setColorSchemeColors(getColorInt(R.color.mobile_color_on_surface));
         mContentSwipe.setProgressBackgroundColorSchemeColor(getColorInt(R.color.mobile_color_surface));
         mContentSwipe.setOnRefreshListener(() -> {
+            if (mCurrentSectionId == MediaGroup.TYPE_HOME && mCategoryChipsGrid != null && !mYouShowing) {
+                mCategoryChipsGrid.animate().cancel();
+                mCategoryChipsGrid.setTranslationY(0f);
+                mCategoryChipsGrid.setAlpha(1f);
+                mCategoryChipsGrid.setVisibility(View.VISIBLE);
+            }
             if (mActiveCategoryChip != null && !mActiveCategoryChip.isAll()) {
                 loadCategoryVideos(mActiveCategoryChip);
             } else if (mPresenter != null) {
@@ -401,19 +407,44 @@ public class MobileBrowseActivity extends MobileActivity
             startActivity(new Intent(this, com.newtube.mobile.ui.settings.MobileCategoryManagerActivity.class));
             return;
         }
+        // If we are currently on Home "All" and have videos, make sure they are saved to mHomeSavedVideos
+        if ((mActiveCategoryChip == null || mActiveCategoryChip.isAll()) && !mCurrentVideos.isEmpty()) {
+            mHomeSavedVideos.clear();
+            mHomeSavedVideos.addAll(mCurrentVideos);
+        }
+
         mActiveCategoryChip = chip;
         CategoryHabitManager.instance(this).recordChipClick(chip.getId());
 
         if (chip.isAll()) {
             RxHelper.disposeActions(mCategoryAction, mCategoryPaginationAction);
             mCategoryLastMediaGroup = null;
+            mGridHiddenForSkeleton = false;
+            mContentGrid.animate().cancel();
+            mContentGrid.setAlpha(1f);
+            setSkeletonVisible(false);
+            hideError();
+
             if (!mHomeSavedVideos.isEmpty()) {
                 mCurrentVideos.clear();
                 mCurrentVideos.addAll(mHomeSavedVideos);
                 submitFeed(false);
-                setSkeletonVisible(false);
-            } else if (mPresenter != null) {
-                mPresenter.onSectionFocused(MediaGroup.TYPE_HOME);
+                mContentSwipe.setRefreshing(false);
+            } else {
+                List<Video> cached = FeedCache.getOrRestore(MediaGroup.TYPE_HOME);
+                if (cached != null && !cached.isEmpty()) {
+                    mHomeSavedVideos.clear();
+                    mHomeSavedVideos.addAll(cached);
+                    mCurrentVideos.clear();
+                    mCurrentVideos.addAll(cached);
+                    submitFeed(false);
+                    mContentSwipe.setRefreshing(false);
+                } else if (mPresenter != null) {
+                    mCurrentVideos.clear();
+                    submitFeed(false);
+                    setSkeletonVisible(true);
+                    mPresenter.onSectionFocused(MediaGroup.TYPE_HOME);
+                }
             }
             return;
         }
@@ -670,22 +701,25 @@ public class MobileBrowseActivity extends MobileActivity
                 }
                 maybeTriggerPagination();
 
-                if (mCurrentSectionId == MediaGroup.TYPE_HOME && mCategoryChipsGrid != null && mCategoryChipsGrid.getVisibility() == View.VISIBLE) {
-                    int firstVisible = mLayoutManager != null ? mLayoutManager.findFirstCompletelyVisibleItemPosition() : 0;
-                    if (firstVisible <= 0) {
+                if (mCurrentSectionId == MediaGroup.TYPE_HOME && !mYouShowing && mCategoryChipsGrid != null && mCategoryChipsGrid.getVisibility() == View.VISIBLE) {
+                    int firstVisible = mLayoutManager != null ? mLayoutManager.findFirstVisibleItemPosition() : 0;
+                    View firstView = mLayoutManager != null ? mLayoutManager.findViewByPosition(0) : null;
+                    boolean isAtAbsoluteTop = (firstVisible == 0 && (firstView == null || firstView.getTop() >= 0));
+
+                    if (isAtAbsoluteTop) {
                         if (mChipsHidden) {
                             mChipsHidden = false;
                             mCategoryChipsGrid.animate().cancel();
-                            mCategoryChipsGrid.animate().translationY(0f).setDuration(180).start();
+                            mCategoryChipsGrid.animate().translationY(0f).alpha(1f).setDuration(160).start();
                         }
-                    } else if (dy > 10 && !mChipsHidden) {
+                    } else if (dy > 4 && !mChipsHidden) {
                         mChipsHidden = true;
                         mCategoryChipsGrid.animate().cancel();
-                        mCategoryChipsGrid.animate().translationY(-mCategoryChipsGrid.getHeight()).setDuration(180).start();
-                    } else if (dy < -10 && mChipsHidden) {
-                        mChipsHidden = false;
-                        mCategoryChipsGrid.animate().cancel();
-                        mCategoryChipsGrid.animate().translationY(0f).setDuration(180).start();
+                        mCategoryChipsGrid.animate()
+                                .translationY(-mCategoryChipsGrid.getHeight())
+                                .alpha(0f)
+                                .setDuration(160)
+                                .start();
                     }
                 }
             }
@@ -797,6 +831,9 @@ public class MobileBrowseActivity extends MobileActivity
      * {@link com.newtube.mobile.ui.settings.SettingsPages}.
      */
     private void openSettings() {
+        if (mCategoryChipsGrid != null) {
+            mCategoryChipsGrid.setVisibility(View.GONE);
+        }
         startActivity(com.newtube.mobile.ui.settings.MobileSettingsActivity.intent(this, null));
     }
 
@@ -916,6 +953,10 @@ public class MobileBrowseActivity extends MobileActivity
             }
         }
         mContentGrid.smoothScrollToPosition(0);
+        if (mCurrentSectionId == MediaGroup.TYPE_HOME && mCategoryChipsGrid != null && !mYouShowing) {
+            mCategoryChipsGrid.animate().cancel();
+            mCategoryChipsGrid.animate().translationY(0f).alpha(1f).setDuration(160).start();
+        }
     }
 
     // ---------------------------------------------------------------------------------
@@ -965,6 +1006,15 @@ public class MobileBrowseActivity extends MobileActivity
         mContentSwipe.setImportantForAccessibility(a11y);
         mFeedSkeleton.setImportantForAccessibility(a11y);
         mErrorContainer.setImportantForAccessibility(a11y);
+
+        if (mCategoryChipsGrid != null) {
+            boolean showChips = (!mYouShowing && mCurrentSectionId == MediaGroup.TYPE_HOME);
+            mCategoryChipsGrid.setVisibility(showChips ? View.VISIBLE : View.GONE);
+            if (showChips) {
+                mCategoryChipsGrid.setTranslationY(0f);
+                mCategoryChipsGrid.setAlpha(1f);
+            }
+        }
 
         boolean subScreen = mSectionFromYou && !mYouShowing
                 && mBottomNav.getMenu().findItem(toMenuItemId(mCurrentSectionId)) == null;
@@ -1213,6 +1263,9 @@ public class MobileBrowseActivity extends MobileActivity
         // arrives as a SettingsGroup, which updateSection(SettingsGroup) intentionally
         // ignores). Route it to the working AppDialog settings screen instead of a blank grid.
         if (sectionId == MediaGroup.TYPE_SETTINGS) {
+            if (mCategoryChipsGrid != null) {
+                mCategoryChipsGrid.setVisibility(View.GONE);
+            }
             syncNavHighlight(mCurrentSectionId); // keep highlight on the real current section
             openSettings();
             return;
@@ -1224,6 +1277,7 @@ public class MobileBrowseActivity extends MobileActivity
             if (mCategoryChipsGrid != null) {
                 mCategoryChipsGrid.setVisibility(View.VISIBLE);
                 mCategoryChipsGrid.setTranslationY(0f);
+                mCategoryChipsGrid.setAlpha(1f);
             }
             if (mContentGrid != null) {
                 mContentGrid.setPadding(0, categoryBarHeightPx, 0, cardSpacingPx);

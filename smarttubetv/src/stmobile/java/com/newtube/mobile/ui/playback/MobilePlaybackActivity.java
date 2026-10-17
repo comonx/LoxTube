@@ -614,6 +614,8 @@ public class MobilePlaybackActivity extends MobileActivity
         } else if (intent.getBooleanExtra(EXTRA_FORCE_PORTRAIT, false)) {
             intent.removeExtra(EXTRA_FORCE_PORTRAIT);
             expandFromFloating(false);
+        } else if (FloatingMiniPlayerManager.isShowing() || mBackgroundAudioMode) {
+            expandFromFloating(false);
         }
     }
 
@@ -3528,6 +3530,7 @@ public class MobilePlaybackActivity extends MobileActivity
         // REORDER_TO_FRONT: the player may sit BELOW Browse in the shared task (mini-player);
         // a notification tap must surface the existing instance, not stack a duplicate.
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent.putExtra(EXTRA_FORCE_PORTRAIT, true);
         int piFlags = PendingIntent.FLAG_UPDATE_CURRENT
                 | (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE : 0);
         return PendingIntent.getActivity(this, 0, intent, piFlags);
@@ -4985,6 +4988,8 @@ public class MobilePlaybackActivity extends MobileActivity
                     // If autoplay is active (the next video will load automatically), keep controls hidden!
                     if (!mIsInPip && !isAutoplayActive()) {
                         showControlsInternal(true);
+                    } else {
+                        hideControlsImmediately();
                     }
                     break;
                 default:
@@ -6590,7 +6595,10 @@ public class MobilePlaybackActivity extends MobileActivity
     @Override
     public void showOverlay(boolean show) {
         if (show) {
-            showControlsInternal(true);
+            // TV controllers (e.g. VideoLoaderController) call showOverlay(true) on each video load.
+            // On mobile, never auto-show controls when a new video loads or transitions; controls
+            // remain hidden unless the user explicitly taps the screen.
+            return;
         } else if (!isHoldingSeekBar()) {
             // NEWTUBE(seek bar): the shared UI timer (PlayerUIController's auto-hide) fires on its
             // own clock; it used to pull the controls - and now the seek bar with its drag - out
