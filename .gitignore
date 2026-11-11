@@ -1,80 +1,54 @@
-# built application files
-*.apk
-*.ap_
 
-# files for the dex VM
-*.dex
-
-# Java class files
-*.class
-
-# generated files
-bin/
-gen/
-
-# Local configuration file (sdk path, etc)
-local.properties
-
-# Windows thumbnail db
-Thumbs.db
-
-# OSX files
-.DS_Store
-
-# Eclipse project files
-.classpath
-.project
-
-# Android Studio
-.idea
 *.iml
-
-#.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
 .gradle
-.kotlin
-.google
+.idea
 build/
-
-# my other stuff
-/smartyoutubetv2/release
-/smarttube/release
-/smarttubetv/release
-# gradle 6 fix
-/smarttube/output
-/smarttubetv/output
-/smarttubemobile/release
-# google-services.json
-*.hprof
-log.txt
-android.keystore
-android-upd2.keystore
-build.log
-notes.txt
-out.txt
-out1.txt
-deps.txt
-logcat.txt
-/releases
-/files
-/misc
-/other
-/TODO.txt
-tmp/
-*_bak*
-*_tmp
-*.bak*
-*.tmp
-*.7z
-.DS_Store
 /captures
 .externalNativeBuild
-fabric.properties
-*BAK.java
-hs_err_pid*.log
+.cxx
+takeout
+/notes
+/legacy
+algo.md
+newpipe-dev
+# Signing keystore - NEVER COMMIT THIS FILE!
+release.keystore
+generate_key.ps1
+generate_key.sh
+generate_key.bat
+flow-website
+svglogo
+metro*
+release.ps1
+release.sh
+release.bat
+releasenote.ps1
+releasenote.sh
+build_result.md
+LibreTube-master
 
-# UI audit captures (local only, not tracked)
-tools/ui-audit/
-
-# release signing (never commit)
-keystore.properties
+# Secrets and Local configuration
+local.properties
+*.keystore
 *.jks
+key.properties
+pipepipe
+graphify-out/
+.claude/
+claude.md
+Flow-desktop/
+
+# Kotlin compiler session/daemon state
+.kotlin/
+
+# Local engine diagnostics (real exported brains - personal data, never commit)
+/diagnostics/
+/app/diagnostics/
+
+# Captured InnerTube explore payloads: megabytes of response, regenerated locally by
+# notes/innertube-video-responses/trim_explore_fixtures.py rather than tracked.
+/app/src/test/resources/explore/
+/app/src/test/resources/shorts/
+
+# macOS Finder metadata
+.DS_Store

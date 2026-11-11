@@ -1,298 +1,266 @@
 <div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://assets.flow-tube.org/v1/banners/flow-android-dark.svg">
+    <img alt="Flow. Privacy-first YouTube and YouTube Music for Android, with recommendations that stay on your phone." src="https://assets.flow-tube.org/v1/banners/flow-android-light.svg" width="100%">
+  </picture>
 
-<img src="/logo.png" width="152" height="142" alt="LoxTube icon">
+  <h3>A privacy-respecting YouTube and YouTube Music client for Android with a local recommendation engine.</h3>
 
-# LoxTube
+  <p>
+  <a href="https://github.com/Flow-Tube/Flow/releases/latest"><picture><source media="(prefers-color-scheme: dark)" srcset="https://assets.flow-tube.org/v1/badges/pill/get-github-dark.svg"><img alt="Get it on GitHub" src="https://assets.flow-tube.org/v1/badges/pill/get-github-light.svg" height="60"></picture></a>
+  <a href="https://apt.izzysoft.de/packages/io.github.aedev.flow"><picture><source media="(prefers-color-scheme: dark)" srcset="https://assets.flow-tube.org/v1/badges/pill/get-izzyondroid-dark.svg"><img alt="Get it on IzzyOnDroid" src="https://assets.flow-tube.org/v1/badges/pill/get-izzyondroid-light.svg" height="60"></picture></a>
+  <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/Flow-Tube/Flow/"><picture><source media="(prefers-color-scheme: dark)" srcset="https://assets.flow-tube.org/v1/badges/pill/get-obtainium-dark.svg"><img alt="Get it on Obtainium" src="https://assets.flow-tube.org/v1/badges/pill/get-obtainium-light.svg" height="60"></picture></a>
+  <a href="https://nightly.link/Flow-Tube/Flow/workflows/build/main/flow-nightly-apk.zip"><picture><source media="(prefers-color-scheme: dark)" srcset="https://assets.flow-tube.org/v1/badges/pill/get-nightly-dark.svg"><img alt="Try the Nightly build" src="https://assets.flow-tube.org/v1/badges/pill/get-nightly-light.svg" height="60"></picture></a>
+  </p>
+  <p>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="https://assets.flow-tube.org/v1/badges/split/android-dark.svg"><img alt="Android 8.0+" src="https://assets.flow-tube.org/v1/badges/split/android-light.svg" height="32"></picture>
+  <a href="https://github.com/Flow-Tube/Flow/releases/latest"><picture><source media="(prefers-color-scheme: dark)" srcset="https://assets.flow-tube.org/v1/badges/split/release-dark.svg"><img alt="Latest release" src="https://assets.flow-tube.org/v1/badges/split/release-light.svg" height="32"></picture></a>
+  <a href="https://github.com/Flow-Tube/Flow/releases"><picture><source media="(prefers-color-scheme: dark)" srcset="https://assets.flow-tube.org/v1/badges/split/downloads-dark.svg"><img alt="Downloads" src="https://assets.flow-tube.org/v1/badges/split/downloads-light.svg" height="32"></picture></a>
+  <a href="License"><picture><source media="(prefers-color-scheme: dark)" srcset="https://assets.flow-tube.org/v1/badges/split/license-dark.svg"><img alt="License: GPL-3.0" src="https://assets.flow-tube.org/v1/badges/split/license-light.svg" height="32"></picture></a>
+  <a href="#cert"><picture><source media="(prefers-color-scheme: dark)" srcset="https://assets.flow-tube.org/v1/badges/split/signed-dark.svg"><img alt="Signed: SHA-256 certificate" src="https://assets.flow-tube.org/v1/badges/split/signed-light.svg" height="32"></picture></a>
+  <a href="https://opencollective.com/flow-tube"><picture><source media="(prefers-color-scheme: dark)" srcset="https://assets.flow-tube.org/v1/badges/split/opencollective-dark.svg"><img alt="Open Collective backers" src="https://assets.flow-tube.org/v1/badges/split/opencollective-light.svg" height="32"></picture></a>
+  </p>
 
-### Advanced YouTube Player for Android Phones & Tablets
-
-A fast, lightweight, and customizable YouTube client for Android phones and tablets.<br>
-Ad-free streaming, SponsorBlock, background playback, floating mini player, custom category tabs, and offline saving.
-
-[![Latest release](https://img.shields.io/github/v/release/comonx/LoxTube?style=flat-square&label=release&color=1E2A78)](https://github.com/comonx/LoxTube/releases/latest)
-[![Android 7.0+](https://img.shields.io/badge/Android-7.0%2B-1E2A78?style=flat-square)](#download)
-[![License: MIT](https://img.shields.io/badge/license-MIT-1E2A78?style=flat-square)](LICENSE)
-
+  <p>
+    Flow is a YouTube client built with Jetpack Compose and Material 3.<br>
+    It includes FlowNeuro, a recommendation engine that runs entirely on your device — no accounts, no tracking, no data leaves your phone.
+  </p>
+  
+  <p>
+    <a href="https://github.com/Flow-Tube/Flow/releases"><b>Download APK</b></a> · 
+    <a href="https://github.com/Flow-Tube/Flow/wiki"><b>Documentation</b></a> · 
+    <a href="https://www.reddit.com/r/Flow_Official/"><b>Subreddit</b></a> · 
+    <a href="#support--donations"><b>Donate</b></a> .
+    <a href="#translate"><b>Translations</b></a>
+  </p>
 </div>
 
-> [!NOTE]
-> **LoxTube** is an independent Android YouTube client built for phones, bringing a modern touch interface, customizable category tabs, double-tap seek, picture-in-picture floating mini-player, and background playback.
+---
+
+## Why Flow?
+
+Most open-source YouTube clients give you playback but no way to discover new content. You either use the official app and get tracked, or you use an alternative and lose recommendations entirely.
+
+Flow gives you both. The recommendation engine learns what you like by analyzing your watch behavior locally. It never leaves your devices. You can inspect everything it knows about you, adjust it, or wipe it at any time.
+
+---
 
 ## Features
 
-<table>
-<tr>
-<td width="50%" valign="top">
+### Video
+- High-quality playback via ExoPlayer (Media3) with resolution switching (1080p, 720p, 480p, 360p)
+- SponsorBlock — automatically skips sponsors, intros, outros, and filler
+- DeArrow — replaces clickbait thumbnails and titles with community-sourced alternatives
+- Return Youtube Dislike (RYD)
+- Background playback — listen to audio with the screen off
+- Picture-in-Picture — keep watching while using other apps
+- Casting to smart TVs and streaming devices
+- Playback speed control (0.25x to 2x)
+- Video chapters with seek jumping
+- Gesture controls for brightness, volume, and seeking
+- Subtitles with customizable font size, color, and background
+- Downloads with VP9, AV1, and standard format support
+- Resume playback from where you left off
 
-#### Your account, in seconds
-Sign in once with a code and your subscriptions, history, playlists, Watch later and
-recommendations load from your account. It doesn't need microG, GmsCore, root or a patched app.
-Signing in is optional; signed out, YouTube still personalises Home from what you watch.
+### Music
+- Dedicated music player with album art and audio visualizations
+- Queue management with add, remove, and reorder
+- Shuffle and repeat (single/all)
+- Persistent mini player across the app
+- Synchronized lyrics display
+- Fetches tracks from YouTube Music
+- Playback speed control for music playback
 
-</td>
-<td width="50%" valign="top">
+### Recommendations (FlowNeuro Engine)
+- Runs 100% on-device — no server, no telemetry, no account needed
+- Learns from what you watch, skip, like, dislike, search for, and how long you watch
+- Distinguishes weekday and weekend patterns, morning and night preferences
+- Detects when you're getting bored of a topic and mixes in new content
+- Prevents your feed from collapsing into the same 2-3 topics
+- Surfaces related videos from your recent watches to create natural topic transitions
+- Uses engagement signals (like-to-view ratios) to filter out low-quality content
+- Full transparency dashboard — see what the algorithm knows and why it recommended something
+- Export/import your entire recommendation profile as a file
 
-#### Keeps playing
-Background playback with the screen off, picture-in-picture, and a mini-player you can
-drag down while you keep browsing. Lock-screen and headset controls work too.
+### Library
+- Local watch history
+- Favorites and custom playlists
+- Shorts feed with bookmarking
+- Continue watching shelf
+- Subscription management with cached feeds
 
-</td>
-</tr>
-<tr>
-<td valign="top">
+### Privacy
+- No Google account required
+- No ads, analytics, or tracking
+- All data stored locally on your device
+- Import subscriptions and history from NewPipe
+- Export or delete everything at any time
 
-#### Save for offline
-Pick a quality up to 1080p, or keep only the audio. Saved videos play in the same player
-with no connection, and they show up in your gallery.
+### Appearance
+- 11 themes: Light, Dark, OLED Black, Ocean Blue, Forest Green, Sunset Orange, Purple Nebula, Midnight Black, Rose Gold, Arctic Ice, Crimson Red
+- Built entirely with Jetpack Compose and Material 3
 
-</td>
-<td valign="top">
+---
 
-#### Measured speed
-The first screen appears in about 0.24 s, and a related video shows its first frame about half
-a second after you tap it ([Pixel 9 medians](#how-fast)). The interface is plain Material Design,
-in light or dark.
+## Screenshots
 
-</td>
-</tr>
-<tr>
-<td valign="top">
+<div align="center">
+  <table>
+    <tr>
+      <td align="center"><b>Home Feed</b><br><img src="Assets/Home.jpeg" width="240"></td>
+      <td align="center"><b>Video Player</b><br><img src="Assets/VideoPlayer.jpeg" width="240"></td>
+      <td align="center"><b>Shorts</b><br><img src="Assets/Shorts.jpeg" width="240"></td>
+    </tr>
+    <tr>
+      <td align="center"><b>Subscriptions</b><br><img src="Assets/Subscriptions.jpeg" width="240"></td>
+      <td align="center"><b>Channel View</b><br><img src="Assets/Channel.jpeg" width="240"></td>
+      <td align="center"><b>Playlist</b><br><img src="Assets/Playlist.jpeg" width="240"></td>
+    </tr>
+    <tr>
+      <td align="center"><b>Music Hub</b><br><img src="Assets/Music.jpeg" width="240"></td>
+      <td align="center"><b>Music Player</b><br><img src="Assets/MusicPlayer.jpeg" width="240"></td>
+      <td align="center"><b>Lyrics</b><br><img src="Assets/Lyrics.jpeg" width="240"></td>
+    </tr>
+    <tr>
+      <td align="center"><b>Artist Page</b><br><img src="Assets/Artist.jpeg" width="240"></td>
+      <td align="center"><b>Album</b><br><img src="Assets/Album.jpeg" width="240"></td>
+      <td align="center"><b>Your Library</b><br><img src="Assets/Library.jpeg" width="240"></td>
+    </tr>
+    <tr>
+      <td align="center"><b>Your Taste</b><br><img src="Assets/YourTaste.jpeg" width="240"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+    </tr>
+  </table>
+</div>
 
-#### Less noise
-**SponsorBlock** skips sponsor segments, **DeArrow** swaps clickbait titles and thumbnails,
-and **Return YouTube Dislike** shows estimated dislike counts. There are no Shorts.
-
-</td>
-<td valign="top">
-
-#### Works with SmartTube on your TV
-Pair with SmartTube on the TV using its Remote control code. You can also play straight to a
-Chromecast from the phone (no live streams or subtitles in that mode), or use the TV's own
-YouTube app.
-
-</td>
-</tr>
-</table>
-
-<details>
-<summary><b>Everything else</b></summary>
-
-- Up to 4K where the video and the phone allow (1080p by default), with codec choice
-- Subtitles, including auto-translated tracks, and caption style and size
-- Playback speed from 0.25x to 2x, plus finer steps
-- Playlists: Play all, Shuffle, Save to playlist, New playlist, a queue with "Playing from…"
-- Several accounts, with a switcher, or none at all
-- Picture-in-picture on Android 8 and later
-- Swipe gestures: up into fullscreen, down out of it, brightness and volume on the sides, sideways to seek
-- Settings in short pages, with a search
-- Read and write comments, live chat; chapters and dubbed audio tracks
-- Playback that waits out tunnels and dead zones and resumes where it stopped
-- English and Spanish
-
-</details>
-
-<p align="center">
-<img src=".github/assets/demo.webp" width="23%" alt="NewTube in motion: Blender Studio's channel, a video with chapters, the comments panel, a seek and the mini-player">
-<img src=".github/assets/screens/comments.webp" width="23%" alt="Comments panel under the video">
-<img src=".github/assets/screens/mini.webp" width="23%" alt="Mini-player over a channel page">
-<img src=".github/assets/screens/light.webp" width="23%" alt="The watch page in the light theme">
-</p>
-
+---
 ## Download
 
-<a href="https://github.com/aleixrodriala/newtube/releases/latest"><img src="images/badge_github.png" height="64" alt="Get it on GitHub"></a>
+### Stable Release
 
-| Your device | File |
-|:--|:--|
-| Almost every phone from the last ~8 years | `NewTube_<version>_arm64-v8a.apk` |
-| Older 32-bit phones | `NewTube_<version>_armeabi-v7a.apk` |
-| Not sure (any ARM phone) | `NewTube_<version>_universal.apk` (bigger) |
-| Older x86 devices and emulators | `NewTube_<version>_x86.apk` |
+<div align="center">
+  <a href="https://github.com/Flow-Tube/Flow/releases/latest"><picture><source media="(prefers-color-scheme: dark)" srcset="https://assets.flow-tube.org/v1/badges/pill/get-github-dark.svg"><img alt="Get it on GitHub" src="https://assets.flow-tube.org/v1/badges/pill/get-github-light.svg" height="60"></picture></a>
+  <a href="https://apt.izzysoft.de/packages/io.github.aedev.flow"><picture><source media="(prefers-color-scheme: dark)" srcset="https://assets.flow-tube.org/v1/badges/pill/get-izzyondroid-dark.svg"><img alt="Get it on IzzyOnDroid" src="https://assets.flow-tube.org/v1/badges/pill/get-izzyondroid-light.svg" height="60"></picture></a>
+  <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/Flow-Tube/Flow/"><picture><source media="(prefers-color-scheme: dark)" srcset="https://assets.flow-tube.org/v1/badges/pill/get-obtainium-dark.svg"><img alt="Get it on Obtainium" src="https://assets.flow-tube.org/v1/badges/pill/get-obtainium-light.svg" height="60"></picture></a>
+</div>
 
-- **Requires Android 7.0 or newer.** NewTube has its own package name
-  (`io.github.aleixrodriala.arc`), so it installs next to SmartTube or the YouTube app.
-- **Updates:** with [Obtainium](https://obtainium.imranr.dev), choose *Add app* and paste
-  `https://github.com/aleixrodriala/newtube`, or install a newer APK over the old one. NewTube
-  also checks for new versions itself and offers them in the app.
-- **Verify what you install.** Every APK is signed with the same key. Its certificate SHA-256 is
-  `2e:f9:9d:76:ed:fa:d9:88:ad:17:cd:ee:8b:a1:8c:63:4e:23:0f:e1:e3:cb:1f:dc:6c:db:02:49:37:0a:36:c9`.
-  Check it with `apksigner verify --print-certs <file>.apk`. Each release also lists a SHA-256 for every file.
-  From 1.10.3 the APKs are built by GitHub Actions from the tagged source; check that with
-  `gh attestation verify <file>.apk -R aleixrodriala/newtube`.
-  NewTube's key is not SmartTube's, so neither app can update the other.
-- **Distributed on GitHub**, not on Google Play.
+#### Which APK should I download?
 
-## How sign-in works
+Each release has six APKs: three device types, each in a GitHub build and a FOSS build.
 
-1. Open the **You** tab, tap the account row, then **Sign in**. NewTube shows a short code.
-2. Tap **Continue with Google**. Google's own page opens: pick your account and allow access.
-   It may mention a TV, because NewTube signs in the same way a TV does.
-3. Come back. Sign-in finishes by itself.
+| Your device | GitHub build | FOSS build |
+| :--- | :--- | :--- |
+| Most phones and tablets (64-bit, `arm64-v8a`) | `flow-arm64-v8a.apk` | `flow-foss-arm64-v8a.apk` |
+| Older 32-bit phones (`armeabi-v7a`) | `flow-armeabi-v7a.apk` | `flow-foss-armeabi-v7a.apk` |
+| Any device (universal, larger download) | `flow.apk` | `flow-foss.apk` |
 
-Your password is only ever typed into Google's page, never into NewTube. The login token is
-stored on your phone and never sent to the developer. You can revoke it at any time at
-[myaccount.google.com/security](https://myaccount.google.com/security), under
-*Your connections to third-party apps & services*.
+- **Not sure?** `flow-arm64-v8a.apk` works on almost every phone. `flow.apk` works on all of them.
+- **GitHub build:** updates itself from inside the app and supports Discord Rich Presence.
+- **FOSS build:** the same app without the built-in updater and the Discord integration. This is the build on IzzyOnDroid; update it through IzzyOnDroid or Obtainium.
+- `checksums.txt` in each release lists the SHA-256 of every APK.
 
-## How fast
+### Nightly Build
+> ⚠️ Nightly builds are unstable and may contain bugs. Use at your own risk.
 
-Medians measured on a Pixel 9 on 25 and 26 September 2026, with release builds of the code that
-became 1.10.1, 2 to 8 runs per cell: small samples, one phone, one carrier, and the mobile-data runs
-were on different days. Later versions haven't been re-timed this way, and 1.12.0 changed how the
-app opens (Home shows loading placeholders first). The method and the full table are in
-[STATUS.md](docs/mobile-port/STATUS.md).
+Flow Nightly is built from every commit to `main`. It installs next to the stable app as a separate app called **Flow Nightly**, keeps its own data, and updates itself to each new nightly from inside the app.
 
-| | Wi-Fi | Mobile data |
-|:--|--:|--:|
-| Open the app → first screen | 0.24 s | 0.24 s |
-| Open the app → Home fully painted | 1.35 s | 1.56 s |
-| Tap a related video → first frame | 0.50 s | 0.53 s |
-| Tap a related video → picture visible | 0.66 s | 0.73 s |
-| Reopen a half-watched video → picture | 0.37 s | – |
-| Tap a shared link → first frame | 0.66 s | 0.84 s |
+<div align="center">
+  <a href="https://github.com/Flow-Tube/Flow/releases/tag/nightly"><picture><source media="(prefers-color-scheme: dark)" srcset="https://assets.flow-tube.org/v1/badges/pill/get-nightly-dark.svg"><img alt="Try the Nightly build" src="https://assets.flow-tube.org/v1/badges/pill/get-nightly-light.svg" height="60"></picture></a>
+</div>
 
-## NewTube and SmartTube
+### Requirements 
+**Minimum Requirement:** Android 8.0+
+<a id="cert"></a>
+### Verifying Authenticity
+To ensure the authenticity of the APK and verify it has not been tampered with, you can check the signing certificate fingerprint using tools like [AppVerifier](https://github.com/soupslurpr/AppVerifier).
 
-|  | SmartTube | NewTube |
-|:--|:--|:--|
-| Made for | Android TV and TV boxes | Phones and tablets |
-| Controls | TV remote (D-pad) | Touch and gestures |
-| Interface | Leanback | Material Design |
-| Engine | MediaServiceCore + SharedModules | Forks of the same modules |
-| Player | ExoPlayer | androidx Media3 |
-| Offline saving | No | Yes |
-| License | MIT | MIT |
+**Release Certificate SHA-256 Fingerprint:**
+`43:22:29:4E:D4:CA:A2:D4:29:41:40:09:58:18:08:0F:FE:8A:CC:1F:BE:3C:DC:76:10:7D:F4:5C:52:86:BE:40`
 
-Have an Android TV? Get [SmartTube](https://github.com/yuliskov/SmartTube). It's excellent,
-and NewTube can cast to it.
+---
 
-## FAQ
+<a id="support--donations"></a>
+## 💰 Support Development
 
-<details>
-<summary><b>Can SmartTube be installed on phones?</b></summary>
+Flow is a free and open-source project. As an independent developer without traditional banking access, keeping this project alive relies entirely on community support. 
 
-SmartTube is made for Android TV and TV boxes, and its README says "There will not be a phone
-version." NewTube is an unofficial phone client built on SmartTube's engine, with a touch interface,
-its own player and offline saving. It is an independent project, not endorsed by SmartTube's developer.
+**The easiest way to support Flow is [Open Collective](https://opencollective.com/flow-tube)**, where every contribution and expense is public. Patreon is also available for card, PayPal or Apple Pay, monthly or as a one-time tip.
 
-</details>
+<a href="https://opencollective.com/flow-tube"><picture><source media="(prefers-color-scheme: dark)" srcset="https://assets.flow-tube.org/v1/badges/pill/support-opencollective-dark.svg"><img alt="Support Flow on Open Collective" src="https://assets.flow-tube.org/v1/badges/pill/support-opencollective-light.svg" height="60"></picture></a>
+<a href="https://patreon.com/A_EDev"><picture><source media="(prefers-color-scheme: dark)" srcset="https://assets.flow-tube.org/v1/badges/pill/support-patreon-tonal-dark.svg"><img alt="Support Flow on Patreon" src="https://assets.flow-tube.org/v1/badges/pill/support-patreon-tonal-light.svg" height="60"></picture></a>
 
-<details>
-<summary><b>Do I need microG, GmsCore, root or ReVanced?</b></summary>
+<br>
 
-No. NewTube isn't a patched YouTube app. It signs in with a code the way a TV does, so it
-doesn't need Google Play Services or a stand-in for them.
+**Prefer to send Crypto directly?**
+If you already use crypto, you can send it directly to my wallets below:
 
-</details>
+| Coin | Network | Address |
+| :--- | :--- | :--- |
+| **USDT** | TRC20 (Tron) | `TRz7VDrTWwCLCfQmYBEJakqcZgbFNWfUMP` |
+| **Bitcoin** | BTC | `bc1qgmkkxxvzvsymtpfazqfl93jw6k4jgy0xmrtnv8` |
+| **Ethereum** | ERC-20 | `0xfbac6f464fec7fe458e318971a42ba45b305b70e` |
+| **Solana** | SOL | `7b3SLgiVPb8qQUvERSPGRWoFoiGEDvkFuY98M1GEngug` |
+| **Monero** | XMR | `8AgaxZnpEvT8VXJpczpL7BQejwSEw97saJmKYqq4zKErbe9bkYSwUhJ813msPPbdYhF11oz4N7tfEj4Zi6k27fKD83ca1if` |
 
-<details>
-<summary><b>How is it different from NewPipe, LibreTube or ReVanced?</b></summary>
+*Your support helps me maintain the project and add amazing new features!*
 
-They're all good apps, and which one fits depends on what you want. NewPipe and LibreTube
-don't sign in to a Google account; they keep subscriptions on your phone or on a Piped server.
-ReVanced patches the official app and needs GmsCore unless you're rooted.
-NewTube is built on SmartTube, so it uses your real account without any of that.
+---
 
-</details>
+## 🙏 Acknowledgments
 
-<details>
-<summary><b>Is there another SmartTube-based phone app?</b></summary>
+Flow stands on the shoulders of giants. Special thanks to:
 
-Yes. [SmarterTube](https://github.com/CodeSculptor/SmarterTube) is another independent phone
-fork of SmartTube, worth comparing. The two are separate projects. One difference today
-(September 2026): NewTube can save videos for offline.
+*   **[NewPipeExtractor](https://github.com/TeamNewPipe/NewPipeExtractor):** The backbone of our data extraction.
+*   **[NewPipe](https://github.com/TeamNewPipe/NewPipe):** For inspiration from their solid foundation for YouTube data handling.
+*   **[PipePipe](https://codeberg.org/NullPointerException/PipePipe):** For their SABR and InnerTube playback implementation, which guided Flow's YouTube streaming pipeline.
+*   **[PipePipe Developer Docs](https://priveetee.github.io/Docs-PipePipe/):** For their reference documentation on SABR, BotGuard/PoToken attestation, and InnerTube extraction internals.
+*   **[MetroList](https://github.com/MetrolistGroup/Metrolist):** Inspiration for the Hybrid Music fetching approach, Lyrics handling and some icons design references.
+*   **[LibreTube](https://github.com/LibreTube/LibreTube):** Inspiration for SponsorBlock and DeArrow handling and some icons design references.
+*   **[ExoPlayer](https://github.com/google/ExoPlayer):** The gold standard for Android media playback.
+*   **[Jetpack Compose](https://developer.android.com/jetpack/compose):** For enabling the beautiful, modern UI.
+*   **[Material Design 3](https://m3.material.io/):** For the design system and guidelines.
 
-</details>
+---
 
-<details>
-<summary><b>Is it safe? How do I know the APK is really NewTube?</b></summary>
+<div align="center">
 
-Up to 1.10.2 the APKs were built on the maintainer's computer. From 1.10.3 they're built by
-GitHub Actions from the tagged source, and each file has a build attestation you can check with
-`gh attestation verify <file>.apk -R aleixrodriala/newtube`. The builds aren't reproducible yet. Check the signing
-certificate against the fingerprint under [Download](#download), and each file against the
-SHA-256 in its release notes. Every release is tagged, so you can read the exact source.
-The app has no analytics, no crash reporting and no ad SDKs, and the developer receives nothing.
-It talks to YouTube (which sees what you watch, as it would anywhere), to the community services
-you can switch off (SponsorBlock, DeArrow, Return YouTube Dislike), and to GitHub. Details are
-in [PRIVACY.md](PRIVACY.md). Every check, with links, is also on the website under
-[Trust and verification](https://newtube.org/#trust).
+<a id="translate"></a>
+## Translations
+Help translate Flow into your language! 
 
-</details>
+<a href="https://hosted.weblate.org/engage/flow/"><picture><source media="(prefers-color-scheme: dark)" srcset="https://assets.flow-tube.org/v1/badges/pill/translate-dark.svg"><img alt="Help translate on Weblate" src="https://assets.flow-tube.org/v1/badges/pill/translate-light.svg" height="60"></picture></a>
 
-<details>
-<summary><b>Was this made with AI?</b></summary>
+[![Translation status](https://hosted.weblate.org/widget/flow/strings/horizontal-auto.svg)](https://hosted.weblate.org/engage/flow/)
+</div>
 
-Yes, in large part. NewTube is one person's project, and most of its own code (the phone
-interface, the player and the network work) was written with AI coding assistants (Claude and
-Codex); the commit trailers say so. The maintainer directs and reviews that work and uses the app
-daily. Each [release record](docs/releases/) lists what was checked on a real phone, what only in
-automated tests, and what is still open. The engine underneath is SmartTube's, written by
-@yuliskov and its contributors over several years.
+---
 
-</details>
+## 📄 License & Copyright
 
-<details>
-<summary><b>Why no donations?</b></summary>
+**Flow** is Free Software: You can use, study, share, and improve it at your will.
+It is distributed under the **GNU General Public License v3 (GPLv3)**.
 
-NewTube doesn't take donations. SmartTube did the heavy lifting, so if you want to give
-something back, [support SmartTube](https://github.com/yuliskov/SmartTube#donation).
+**Copyright © 2025-2026 A-EDev**
 
-</details>
+> 🚨 **For Developers:**
+> This license requires that any project using Flow's source code (including the `FlowNeuroEngine` algorithm) must also be **Open Source** under the GPLv3 license. You may not use this code in a proprietary or closed-source application.
 
-<details>
-<summary><b>A video won't play. What now?</b></summary>
+---
 
-YouTube sometimes refuses a video or an account. NewTube retries through other routes, but not
-every video comes back. If one keeps failing, [open an issue](https://github.com/aleixrodriala/newtube/issues/new/choose)
-with the video link and your NewTube version.
+## Star History
 
-</details>
-
-## Built on SmartTube
-
-| Project | By | Used for |
-|:--|:--|:--|
-| [SmartTube](https://github.com/yuliskov/SmartTube) | [@yuliskov](https://github.com/yuliskov) and contributors | The engine, accounts and integrations: everything under the hood |
-| [SponsorBlock](https://sponsor.ajay.app) · [DeArrow](https://dearrow.ajay.app) | Ajay Ramachandran and contributors | Segment and title data (CC BY-NC-SA 4.0) |
-| [Return YouTube Dislike](https://returnyoutubedislike.com) | RYD contributors | Dislike counts |
-| [androidx Media3](https://developer.android.com/media/media3) | Google (Apache-2.0) | Playback |
-
-Full notices are in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
-SmartTube's original README is kept at [docs/UPSTREAM_README_SmartTube.md](docs/UPSTREAM_README_SmartTube.md).
-
-## Translate
-
-NewTube's phone screens are in English and Spanish so far. You can translate them in your browser
-on **[Weblate](https://hosted.weblate.org/projects/newtube/)** (WEBLATE-URL-PLACEHOLDER: the
-project page goes live once it is approved), with no coding and no GitHub account needed. The
-settings and messages inherited from SmartTube already exist in about 45 languages and just need
-their gaps filled. Weblate sends the translations here as pull requests, and each one ships in the
-next release. How it works and what to translate first: [TRANSLATING.md](TRANSLATING.md).
-
-## Building and contributing
-
-New releases, help and ideas are on the [NewTube Discord](https://discord.gg/xu3v6euSHq).
-Issues and pull requests are welcome. Build instructions are in [docs/BUILDING.md](docs/BUILDING.md).
-The [changelog](CHANGELOG.md) covers every release, with a
-[Spanish edition](CHANGELOG.es.md) for the testers.
-
-## License
-
-[MIT](LICENSE), the same as SmartTube. © yuliskov (SmartTube) and NewTube contributors.
-
-## Star history
-
-<a href="https://www.star-history.com/#aleixrodriala/newtube&Date">
+<a href="https://github.com/Flow-Tube/Flow/stargazers">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=aleixrodriala/newtube&type=Date&theme=dark">
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=aleixrodriala/newtube&type=Date">
-    <img alt="NewTube's GitHub stars over time" src="https://api.star-history.com/svg?repos=aleixrodriala/newtube&type=Date" width="100%">
+    <source media="(prefers-color-scheme: dark)" srcset="https://assets.flow-tube.org/v1/stars/stars-flow-android-dark.svg">
+    <img alt="Star history of Flow for Android" src="https://assets.flow-tube.org/v1/stars/stars-flow-android-light.svg" width="100%">
   </picture>
 </a>
 
 ---
 
-*NewTube is an independent, unofficial project. It is not affiliated with, funded, authorized or
-endorsed by Google LLC, YouTube, or SmartTube's developer, and it hosts no content. Save only what
-the law and the platform's terms allow you to. YouTube, Android and Google are trademarks of Google LLC.*
+<div align="center">
+  <a href="https://github.com/Flow-Tube"><picture><source media="(prefers-color-scheme: dark)" srcset="https://assets.flow-tube.org/v1/badges/pill/part-of-flow-dark.svg"><img alt="Part of the Flow ecosystem" src="https://assets.flow-tube.org/v1/badges/pill/part-of-flow-light.svg" height="60"></picture></a>
+  <br><br>
+  <sub>Made with ❤️ by A-EDev</sub>
+</div>
