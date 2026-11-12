@@ -8,9 +8,14 @@ import java.time.Instant
 private val ReleaseJson = Json { ignoreUnknownKeys = true }
 private const val SHA256_PREFIX = "sha256:"
 private const val FOSS_PREFIX = "flow-foss"
-private const val UNIVERSAL_APK = "flow.apk"
 private const val APK_SUFFIX = ".apk"
-private val NightlyApk = Regex("""flow-nightly-(\d+)\.apk""", RegexOption.IGNORE_CASE)
+private val PREFERRED_APK_NAMES = listOf(
+    "loxtube.apk",
+    "LoxTube.apk",
+    "app-github-release.apk",
+    "flow.apk",
+)
+private val NightlyApk = Regex("""(?:flow|loxtube)-nightly-(\d+)\.apk""", RegexOption.IGNORE_CASE)
 
 @Serializable
 internal data class GitHubRelease(
@@ -79,15 +84,40 @@ internal fun selectApk(
 ): GitHubAsset? {
     val github =
         assets.filter {
-            it.name.endsWith(APK_SUFFIX, ignoreCase = true) && !it.name.startsWith(FOSS_PREFIX, ignoreCase = true)
+            it.name.endsWith(APK_SUFFIX, ignoreCase = true) &&
+                !it.name.startsWith(FOSS_PREFIX, ignoreCase = true) &&
+                !it.name.startsWith("loxtube-foss", ignoreCase = true)
         }
-    val splits = github.filter { asset -> supportedAbis.any { asset.name.equals("flow-$it.apk", ignoreCase = true) } }
+    if (github.isEmpty()) return null
+
+    val splits =
+        github.filter { asset ->
+            supportedAbis.any { abi ->
+                asset.name.equals("loxtube-$abi.apk", ignoreCase = true) ||
+                    asset.name.equals("flow-$abi.apk", ignoreCase = true)
+            }
+        }
     if (splits.isNotEmpty()) {
-        return supportedAbis.firstNotNullOfOrNull { abi -> splits.firstOrNull { it.name.equals("flow-$abi.apk", ignoreCase = true) } }
+        return supportedAbis.firstNotNullOfOrNull { abi ->
+            splits.firstOrNull {
+                it.name.equals("loxtube-$abi.apk", ignoreCase = true) ||
+                    it.name.equals("flow-$abi.apk", ignoreCase = true)
+            }
+        }
     }
-    val publishesSplits = github.any { it.name.startsWith("flow-", ignoreCase = true) }
-    if (publishesSplits && github.none { it.name.equals(UNIVERSAL_APK, ignoreCase = true) }) return null
-    return github.firstOrNull { it.name.equals(UNIVERSAL_APK, ignoreCase = true) } ?: github.firstOrNull()
+
+    val publishesSplits =
+        github.any {
+            it.name.startsWith("flow-", ignoreCase = true) ||
+                it.name.startsWith("loxtube-", ignoreCase = true)
+        }
+    val universal =
+        PREFERRED_APK_NAMES.firstNotNullOfOrNull { name ->
+            github.firstOrNull { it.name.equals(name, ignoreCase = true) }
+        }
+
+    if (publishesSplits && universal == null) return null
+    return universal ?: github.firstOrNull()
 }
 
 private fun GitHubAsset.toReleaseApk(): ReleaseApk =
